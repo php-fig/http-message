@@ -46,7 +46,7 @@ interface RequestInterface extends MessageInterface
      * @param string $url Request URL.
      *
      * @return self Reference to the request.
-     * @throws \InvalidArgumentException If the URL is invalid.
+     * @throws InvalidArgumentException If the URL is invalid.
      * @link http://tools.ietf.org/html/rfc3986#section-4.3
      */
     public function setUrl($url);
