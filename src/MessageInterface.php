@@ -31,7 +31,7 @@ interface MessageInterface
      *
      * @param StreamInterface|null $body Body.
      *
-     * @return self Returns the message.
+     * @return void
      */
     public function setBody(StreamInterface $body = null);
 
@@ -93,7 +93,7 @@ interface MessageInterface
      * @param string       $header Header name
      * @param string|array $value  Header value(s)
      *
-     * @return self Returns the message.
+     * @return void
      */
     public function setHeader($header, $value);
 
@@ -106,7 +106,7 @@ interface MessageInterface
      *
      * @param array $headers Headers to set.
      *
-     * @return self Returns the message.
+     * @return void
      */
     public function setHeaders(array $headers);
 
@@ -117,7 +117,7 @@ interface MessageInterface
      * @param string $header Header name to add
      * @param string $value  Value of the header
      *
-     * @return self
+     * @return void
      */
     public function addHeader($header, $value);
 
@@ -132,7 +132,7 @@ interface MessageInterface
      *
      * @param array $headers Associative array of headers to add to the message
      *
-     * @return self
+     * @return void
      */
     public function addHeaders(array $headers);
 
@@ -141,7 +141,7 @@ interface MessageInterface
      *
      * @param string $header HTTP header to remove
      *
-     * @return self
+     * @return void
      */
     public function removeHeader($header);
 }
