@@ -8,8 +8,10 @@ namespace Psr\HttpMessage;
 interface StreamInterface
 {
     /**
-     * Attempts to seek to the beginning of the stream and reads all data into
-     * a string until the end of the stream is reached.
+     * Reads all data from the stream into a string, from the beginning to end.
+     *
+     * This method MUST attempt to seek to the beginning of the stream before
+     * reading data and read the stream until the end is reached.
      *
      * Warning: This could attempt to load a large amount of data into memory.
      *
@@ -19,6 +21,8 @@ interface StreamInterface
 
     /**
      * Closes the stream and any underlying resources.
+     *
+     * @return void
      */
     public function close();
 
@@ -26,6 +30,8 @@ interface StreamInterface
      * Separates any underlying resources from the stream.
      *
      * After the stream has been detached, the stream is in an unusable state.
+     *
+     * @return void
      */
     public function detach();
 

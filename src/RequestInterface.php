@@ -16,8 +16,7 @@ interface RequestInterface extends MessageInterface
     public function getMethod();
 
     /**
-     * Sets the method to be performed on the resource identified by the
-     * Request-URI.
+     * Sets the method to be performed on the resource identified by the Request-URI.
      *
      * While HTTP method names are typically all uppercase characters, HTTP
      * method names are case-sensitive and thus implementations SHOULD NOT
@@ -32,7 +31,11 @@ interface RequestInterface extends MessageInterface
     /**
      * Gets the absolute request URL.
      *
-     * @return string Returns the URL as a string.
+     * @return string|object Returns the URL as a string, or an object that
+     *    implements the `__toString()` method. The URL must be an absolute URI
+     *    as specified in RFC 3986.
+     *
+     * @link http://tools.ietf.org/html/rfc3986#section-4.3
      */
     public function getUrl();
 
@@ -43,9 +46,10 @@ interface RequestInterface extends MessageInterface
      * `__toString()` method. The URL must be an absolute URI as specified
      * in RFC 3986.
      *
-     * @param string $url Request URL.
+     * @param string|object $url Request URL.
      *
      * @return void
+     *
      * @throws \InvalidArgumentException If the URL is invalid.
      * @link http://tools.ietf.org/html/rfc3986#section-4.3
      */

@@ -9,8 +9,9 @@ namespace Psr\HttpMessage;
 interface MessageInterface
 {
     /**
-     * Gets the HTTP protocol version as a string containing only the HTTP
-     * version (e.g., "1.1", "1.0").
+     * Gets the HTTP protocol version as a string.
+     *
+     * The string MUST contain only the HTTP version number (e.g., "1.1", "1.0").
      *
      * @return string HTTP protocol version.
      */
@@ -32,6 +33,8 @@ interface MessageInterface
      * @param StreamInterface|null $body Body.
      *
      * @return void
+     *
+     * @throws \InvalidArgumentException When the body is not valid.
      */
     public function setBody(StreamInterface $body = null);
 
@@ -75,12 +78,11 @@ interface MessageInterface
     public function getHeader($header);
 
     /**
-     * Retrieve a header by the given case-insensitive name as an array of
-     * strings.
+     * Retrieves a header by the given case-insensitive name as an array of strings.
      *
      * @param string $header Case-insensitive header name.
      *
-     * @return array
+     * @return string[]
      */
     public function getHeaderAsArray($header);
 
@@ -88,18 +90,18 @@ interface MessageInterface
      * Sets a header, replacing any existing values of any headers with the
      * same case-insensitive name.
      *
-     * The header values MUST be a string or an array of strings.
+     * The header name is case-insensitive. The header values MUST be a string
+     * or an array of strings.
      *
-     * @param string       $header Header name
-     * @param string|array $value  Header value(s)
+     * @param string $header Header name
+     * @param string|string[] $value  Header value(s)
      *
      * @return void
      */
     public function setHeader($header, $value);
 
     /**
-     * Sets headers, replacing any headers that have already been set on the
-     * message.
+     * Sets headers, replacing any headers that have already been set on the message.
      *
      * The array keys MUST be a string. The array values must be either a
      * string or an array of strings.
@@ -111,8 +113,10 @@ interface MessageInterface
     public function setHeaders(array $headers);
 
     /**
-     * Appends a header value to any existing values associated with the
-     * given header name.
+     * Appends a header value for the specified header.
+     *
+     * Existing values for the specified header will be maintained. The new
+     * value will be appended to the existing list.
      *
      * @param string $header Header name to add
      * @param string $value  Value of the header
