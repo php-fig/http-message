@@ -1,6 +1,6 @@
 <?php
 
-namespace Psr\HttpMessage;
+namespace Psr\Http\Message;
 
 /**
  * A HTTP request message.
