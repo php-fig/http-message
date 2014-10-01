@@ -20,23 +20,23 @@ interface MessageInterface
     /**
      * Gets the body of the message.
      *
-     * @return StreamInterface|null Returns the body, or null if not set.
+     * @return StreamableInterface|null Returns the body, or null if not set.
      */
     public function getBody();
 
     /**
      * Sets the body of the message.
      *
-     * The body MUST be a StreamInterface object. Setting the body to null MUST
+     * The body MUST be a StreamableInterface object. Setting the body to null MUST
      * remove the existing body.
      *
-     * @param StreamInterface|null $body Body.
+     * @param StreamableInterface|null $body Body.
      *
      * @return void
      *
      * @throws \InvalidArgumentException When the body is not valid.
      */
-    public function setBody(StreamInterface $body = null);
+    public function setBody(StreamableInterface $body = null);
 
     /**
      * Gets all message headers.
