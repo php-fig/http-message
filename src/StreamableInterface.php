@@ -5,7 +5,7 @@ namespace Psr\Http\Message;
 /**
  * Describes a stream instance.
  */
-interface StreamInterface
+interface StreamableInterface
 {
     /**
      * Reads all data from the stream into a string, from the beginning to end.
@@ -31,9 +31,24 @@ interface StreamInterface
      *
      * After the stream has been detached, the stream is in an unusable state.
      *
-     * @return void
+     * @return resource|null Underlying PHP stream, if any
      */
     public function detach();
+
+    /**
+     * Replaces the underlying stream resource with the provided stream.
+     *
+     * Use this method to replace the underlying stream with another; as an
+     * example, in server-side code, if you decide to return a file, you
+     * would replace the original content-oriented stream with the file
+     * stream.
+     *
+     * Any internal state such as caching of cursor position should be reset
+     * when attach() is called, as the stream has changed.
+     *
+     * @return void
+     */
+    public function attach($stream);
 
     /**
      * Get the size of the stream if known
@@ -115,11 +130,25 @@ interface StreamInterface
     public function read($length);
 
     /**
-     * Returns the remaining contents in a string, up to maxlength bytes.
+     * Returns the remaining contents in a string
      *
-     * @param int $maxLength The maximum bytes to read. Defaults to -1 (read
-     *                       all the remaining buffer).
      * @return string
      */
-    public function getContents($maxLength = -1);
+    public function getContents();
+
+    /**
+     * Get stream metadata as an associative array or retrieve a specific key.
+     *
+     * The keys returned are identical to the keys returned from PHP's
+     * stream_get_meta_data() function.
+     *
+     * @param string $key Specific metadata to retrieve.
+     *
+     * @return array|mixed|null Returns an associative array if no key is
+     *                          provided. Returns a specific key value if a key
+     *                          is provided and the value is found, or null if
+     *                          the key is not found.
+     * @see http://php.net/manual/en/function.stream-get-meta-data.php
+     */
+    public function getMetadata($key = null);
 }
