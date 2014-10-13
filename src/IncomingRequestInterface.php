@@ -23,7 +23,7 @@ interface IncomingRequestInterface extends RequestInterface
      *
      * The return value can be either an array or an object that acts like
      * an array (e.g., implements ArrayAccess, or an ArrayObject).
-     * 
+     *
      * @return array|\ArrayAccess
      */
     public function getCookieParams();
@@ -39,9 +39,9 @@ interface IncomingRequestInterface extends RequestInterface
      *
      * The value provided should be an array or array-like object
      * (e.g., implements ArrayAccess, or an ArrayObject).
-     * 
+     *
      * @param array|\ArrayAccess $cookies Cookie values/structs
-     * 
+     *
      * @return void
      */
     public function setCookieParams($cookies);
@@ -57,7 +57,7 @@ interface IncomingRequestInterface extends RequestInterface
      *
      * The return value can be either an array or an object that acts like
      * an array (e.g., implements ArrayAccess, or an ArrayObject).
-     * 
+     *
      * @return array
      */
     public function getQueryParams();
@@ -74,7 +74,7 @@ interface IncomingRequestInterface extends RequestInterface
      *
      * The return value can be either an array or an object that acts like
      * an array (e.g., implements ArrayAccess, or an ArrayObject).
-     * 
+     *
      * @return array Upload file(s) metadata, if any.
      */
     public function getFileParams();
@@ -88,7 +88,7 @@ interface IncomingRequestInterface extends RequestInterface
      *
      * In other cases, the parent getBody() method should be used to retrieve
      * the body content.
-     * 
+     *
      * @return array|object The deserialized body parameters, if any. These may
      *                      be either an array or an object, though an array or
      *                      array-like object is recommended.
@@ -101,7 +101,7 @@ interface IncomingRequestInterface extends RequestInterface
      * If the body content can be deserialized, the values obtained may then
      * be injected into the response using this method. This method will
      * typically be invoked by a factory marshaling request parameters.
-     * 
+     *
      * @param array|object $values The deserialized body parameters, if any.
      *                             These may be either an array or an object,
      *                             though an array or array-like object is
@@ -128,7 +128,7 @@ interface IncomingRequestInterface extends RequestInterface
      * If a router or similar is used to match against the path and/or request,
      * this method can be used to inject the request with the results, so long
      * as those results can be represented as an array or array-like object.
-     * 
+     *
      * @param array|\ArrayAccess $values Path parameters matched by routing
      *
      * @return void

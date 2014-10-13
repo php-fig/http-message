@@ -3,7 +3,11 @@
 namespace Psr\Http\Message;
 
 /**
- * Describes a stream instance.
+ * Describes streamable content.
+ *
+ * Typically, an instance will wrap a PHP stream; this interface provides
+ * a wrapper around the most common operations, including serialization of
+ * the entire stream to a string.
  */
 interface StreamableInterface
 {
