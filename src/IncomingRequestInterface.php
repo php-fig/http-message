@@ -6,9 +6,9 @@ namespace Psr\Http\Message;
  * An incoming (server-side) HTTP request.
  *
  * This interface further describes a server-side request and provides
- * accessors and mutators around common request data, such as query
+ * accessors and mutators around common request data, including query
  * string arguments, body parameters, upload file metadata, cookies, and
- * matched routing parameters.
+ * arbitrary attributes derived from the request by the application.
  */
 interface IncomingRequestInterface extends RequestInterface
 {
@@ -18,13 +18,10 @@ interface IncomingRequestInterface extends RequestInterface
      * Retrieves cookies sent by the client to the server.
      *
      * The assumption is these are injected during instantiation, typically
-     * from PHP's $_COOKIE superglobal, and should remain immutable over the
-     * course of the incoming request.
+     * from PHP's $_COOKIE superglobal. The data IS NOT REQUIRED to come from
+     * $_COOKIE, but MUST be compatible with the structure of $_COOKIE.
      *
-     * The return value can be either an array or an object that acts like
-     * an array (e.g., implements ArrayAccess, or an ArrayObject).
-     *
-     * @return array|\ArrayAccess
+     * @return array
      */
     public function getCookieParams();
 
@@ -35,28 +32,28 @@ interface IncomingRequestInterface extends RequestInterface
      * libraries that implement additional security practices, such as
      * encrypting or hashing cookie values; in such cases, they will read
      * the original value, filter them, and re-inject into the incoming
-     * request..
+     * request.
      *
-     * The value provided should be an array or array-like object
-     * (e.g., implements ArrayAccess, or an ArrayObject).
+     * The value provided MUST be compatible with the structure of $_COOKIE.
      *
-     * @param array|\ArrayAccess $cookies Cookie values/structs
-     *
+     * @param array $cookies Cookie values
      * @return void
+     * @throws \InvalidArgumentException For invalid cookie parameters.
      */
-    public function setCookieParams($cookies);
+    public function setCookieParams(array $cookies);
 
     /**
      * Retrieve query string arguments.
      *
      * Retrieves the deserialized query string arguments, if any.
      *
-     * The assumption is these are injected during instantiation, typically
-     * from PHP's $_GET superglobal, and should remain immutable over the
-     * course of the incoming request.
-     *
-     * The return value can be either an array or an object that acts like
-     * an array (e.g., implements ArrayAccess, or an ArrayObject).
+     * These values SHOULD remain immutable over the course of the incoming
+     * request. They MAY be injected during instantiation, such as from PHP's
+     * $_GET superglobal, or MAY be derived from some other value such as the
+     * URI. In cases where the arguments are parsed from the URI, the data
+     * MUST be compatible with what PHP's `parse_str()` would return for
+     * purposes of how duplicate query parameters are handled, and how nested
+     * sets are handled.
      *
      * @return array
      */
@@ -65,15 +62,12 @@ interface IncomingRequestInterface extends RequestInterface
     /**
      * Retrieve the upload file metadata.
      *
-     * This method should return file upload metadata in the same structure
+     * This method MUST return file upload metadata in the same structure
      * as PHP's $_FILES superglobal.
      *
-     * The assumption is these are injected during instantiation, typically
-     * from PHP's $_FILES superglobal, and should remain immutable over the
-     * course of the incoming request.
-     *
-     * The return value can be either an array or an object that acts like
-     * an array (e.g., implements ArrayAccess, or an ArrayObject).
+     * These values SHOULD remain immutable over the course of the incoming
+     * request. They MAY be injected during instantiation, such as from PHP's
+     * $_FILES superglobal, or MAY be derived from other sources.
      *
      * @return array Upload file(s) metadata, if any.
      */
@@ -82,56 +76,51 @@ interface IncomingRequestInterface extends RequestInterface
     /**
      * Retrieve any parameters provided in the request body.
      *
-     * If the request body can be deserialized, and if the deserialized values
-     * can be represented as an array or object, this method can be used to
-     * retrieve them.
+     * If the request body can be deserialized to an array, this method MAY be
+     * used to retrieve them. These MAY be injected during instantiation from
+     * PHP's $_POST superglobal. The data IS NOT REQUIRED to come from $_POST,
+     * but MUST be an array.
      *
-     * In other cases, the parent getBody() method should be used to retrieve
-     * the body content.
+     * In cases where the request content cannot be coerced to an array, the
+     * parent getBody() method should be used to retrieve the body content.
      *
-     * @return array|object The deserialized body parameters, if any. These may
-     *                      be either an array or an object, though an array or
-     *                      array-like object is recommended.
+     * @return array The deserialized body parameters, if any.
      */
     public function getBodyParams();
 
     /**
      * Set the request body parameters.
      *
-     * If the body content can be deserialized, the values obtained may then
-     * be injected into the response using this method. This method will
-     * typically be invoked by a factory marshaling request parameters.
+     * If the body content can be deserialized to an array, the values obtained
+     * MAY then be injected into the response using this method. This method
+     * will typically be invoked by a factory marshaling request parameters.
      *
-     * @param array|object $values The deserialized body parameters, if any.
-     *                             These may be either an array or an object,
-     *                             though an array or array-like object is
-     *                             recommended.
-     *
+     * @param array $values The deserialized body parameters, if any.
      * @return void
+     * @throws \InvalidArgumentException For $values that cannot be accepted.
      */
-    public function setBodyParams($values);
+    public function setBodyParams(array $values);
 
     /**
-     * Retrieve parameters matched during routing.
+     * Retrieve attributes derived from the request.
      *
      * If a router or similar is used to match against the path and/or request,
-     * this method can be used to retrieve the results, so long as those
-     * results can be represented as an array or array-like object.
+     * this method MAY be used to retrieve the results, so long as those
+     * results can be represented as an array.
      *
-     * @return array|\ArrayAccess Path parameters matched by routing
+     * @return array Attributes derived from the request.
      */
-    public function getPathParams();
+    public function getAttributes();
 
     /**
-     * Set parameters discovered by matching that path
+     * Set attributes derived from the request
      *
      * If a router or similar is used to match against the path and/or request,
-     * this method can be used to inject the request with the results, so long
-     * as those results can be represented as an array or array-like object.
+     * this method MAY be used to inject the request with the results, so long
+     * as those results can be represented as an array.
      *
-     * @param array|\ArrayAccess $values Path parameters matched by routing
-     *
+     * @param array $attributes Attributes derived from the request.
      * @return void
      */
-    public function setPathParams(array $values);
+    public function setAttributes(array $attributes);
 }

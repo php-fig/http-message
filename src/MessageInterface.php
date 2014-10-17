@@ -4,7 +4,11 @@ namespace Psr\Http\Message;
 
 /**
  * HTTP messages consist of requests from a client to a server and responses
- * from a server to a client.
+ * from a server to a client. This interface defines the methods common to
+ * each.
+ *
+ * @link http://www.ietf.org/rfc/rfc7230.txt
+ * @link http://www.ietf.org/rfc/rfc7231.txt
  */
 interface MessageInterface
 {
@@ -24,7 +28,6 @@ interface MessageInterface
      * "1.1", "1.0").
      *
      * @param string $version HTTP protocol version
-     *
      * @return void
      */
     public function setProtocolVersion($version);
@@ -43,9 +46,7 @@ interface MessageInterface
      * remove the existing body.
      *
      * @param StreamableInterface|null $body Body.
-     *
      * @return void
-     *
      * @throws \InvalidArgumentException When the body is not valid.
      */
     public function setBody(StreamableInterface $body = null);
@@ -61,7 +62,15 @@ interface MessageInterface
      *         echo $name . ": " . implode(", ", $values);
      *     }
      *
-     * @return array Returns an associative array of the message's headers.
+     *     // Emit headers iteratively:
+     *     foreach ($message->getHeaders() as $name => $values) {
+     *         foreach ($values as $value) {
+     *             header(sprintf('%s: %s', $name, $value), false);
+     *         }
+     *     }
+     *
+     * @return array Returns an associative array of the message's headers. Each
+     *     key MUST be a header name, and each value MUST be an array of strings.
      */
     public function getHeaders();
 
@@ -69,7 +78,6 @@ interface MessageInterface
      * Checks if a header exists by the given case-insensitive name.
      *
      * @param string $header Case-insensitive header name.
-     *
      * @return bool Returns true if any header names match the given header
      *     name using a case-insensitive string comparison. Returns false if
      *     no matching header name is found in the message.
@@ -84,7 +92,6 @@ interface MessageInterface
      * a comma.
      *
      * @param string $header Case-insensitive header name.
-     *
      * @return string
      */
     public function getHeader($header);
@@ -93,7 +100,6 @@ interface MessageInterface
      * Retrieves a header by the given case-insensitive name as an array of strings.
      *
      * @param string $header Case-insensitive header name.
-     *
      * @return string[]
      */
     public function getHeaderAsArray($header);
@@ -106,64 +112,29 @@ interface MessageInterface
      * or an array of strings.
      *
      * @param string $header Header name
-     * @param string|string[]|object|object[] $value Header value(s). Values may 
-     *                                               be objects as long as they
-     *                                               can be cast to strings.
-     *
+     * @param string|string[] $value Header value(s).
      * @return void
+     * @throws \InvalidArgumentException for invalid header names or values.
      */
     public function setHeader($header, $value);
-
-    /**
-     * Sets headers, replacing any headers that have already been set on the message.
-     *
-     * The array keys MUST be a string. Each array value MUST be either a string
-     * or object, or array of strings and/or objects; any object used as a
-     * header value MUST be able to be cast to a string.
-     *
-     * @param array $headers Headers to set.
-     *
-     * @return void
-     */
-    public function setHeaders(array $headers);
 
     /**
      * Appends a header value for the specified header.
      *
      * Existing values for the specified header will be maintained. The new
-     * value will be appended to the existing list.
+     * value(s) will be appended to the existing list.
      *
      * @param string $header Header name to add
-     * @param string|object $value Value of the header; object is allowed if it
-     *                             can be cast to a string.
-     *
+     * @param string|string[] $value Header value(s).
      * @return void
+     * @throws \InvalidArgumentException for invalid header names or values.
      */
     public function addHeader($header, $value);
-
-    /**
-     * Merges in an associative array of headers.
-     *
-     * Each array key MUST be a string representing the case-insensitive name
-     * of a header. Each value MUST be either a string or object, or array of
-     * strings and/or objects; any object used as a header value MUST be able
-     * to be cast to a string.
-     *
-     * For each value, the value is appended to any existing header of the same
-     * name, or, if a header does not already exist by the given name, then the
-     * header is added.
-     *
-     * @param array $headers Associative array of headers to add to the message
-     *
-     * @return void
-     */
-    public function addHeaders(array $headers);
 
     /**
      * Remove a specific header by case-insensitive name.
      *
      * @param string $header HTTP header to remove
-     *
      * @return void
      */
     public function removeHeader($header);
