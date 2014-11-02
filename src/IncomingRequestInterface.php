@@ -3,15 +3,64 @@
 namespace Psr\Http\Message;
 
 /**
- * An incoming (server-side) HTTP request.
+ * Representation of an incoming, server-side HTTP request.
  *
- * This interface further describes a server-side request and provides
- * accessors and mutators around common request data, including query
- * string arguments, body parameters, upload file metadata, cookies, and
- * arbitrary attributes derived from the request by the application.
+ * Per the HTTP specification, this interface includes accessors for
+ * the following:
+ *
+ * - Protocol version
+ * - HTTP method
+ * - URL
+ * - Headers
+ * - Message body
+ *
+ * Additionally, it encapsulates all data as it has arrived to the 
+ * application from the PHP environment, including:
+ *
+ * - The values represented in $_SERVER.
+ * - Any cookies provided (generally via $_COOKIE)
+ * - Query string arguments (generally via $_GET, or as parsed via parse_str())
+ * - Upload files, if any (as represented by $_FILES)
+ * - Deserialized body parameters (generally from $_POST)
+ *
+ * The above values MUST be immutable, in order to ensure that all consumers of
+ * the request instance within a given request cycle receive the same information.
+ *
+ * Additionally, this interface recognizes the utility of introspecting a
+ * request to derive and match additional parameters (e.g., via URI path 
+ * matching, decrypting cookie values, deserializing non-form-encoded body
+ * content, matching authorization headers to users, etc). These parameters
+ * are stored in an "attributes" property, which MUST be mutable.
  */
-interface IncomingRequestInterface extends RequestInterface
+interface IncomingRequestInterface extends MessageInterface
 {
+    /**
+     * Retrieves the HTTP method of the request.
+     *
+     * @return string Returns the request method.
+     */
+    public function getMethod();
+
+    /**
+     * Retrieves the request URL.
+     *
+     * @link http://tools.ietf.org/html/rfc3986#section-4.3
+     * @return string Returns the URL as a string. The URL SHOULD be an absolute
+     *     URI as specified in RFC 3986, but MAY be a relative URI.
+     */
+    public function getUrl();
+
+    /**
+     * Retrieve server parameters.
+     *
+     * Retrieves data related to the incoming request environment, 
+     * typically derived from PHP's $_SERVER superglobal. The data IS NOT 
+     * REQUIRED to originate from $_SERVER.
+     * 
+     * @return array
+     */
+    public function getServerParams();
+
     /**
      * Retrieve cookies.
      *
@@ -24,23 +73,6 @@ interface IncomingRequestInterface extends RequestInterface
      * @return array
      */
     public function getCookieParams();
-
-    /**
-     * Set cookie parameters.
-     *
-     * Allows a library to set the cookie parameters. Use cases include
-     * libraries that implement additional security practices, such as
-     * encrypting or hashing cookie values; in such cases, they will read
-     * the original value, filter them, and re-inject into the incoming
-     * request.
-     *
-     * The value provided MUST be compatible with the structure of $_COOKIE.
-     *
-     * @param array $cookies Cookie values
-     * @return void
-     * @throws \InvalidArgumentException For invalid cookie parameters.
-     */
-    public function setCookieParams(array $cookies);
 
     /**
      * Retrieve query string arguments.
@@ -81,46 +113,59 @@ interface IncomingRequestInterface extends RequestInterface
      * PHP's $_POST superglobal. The data IS NOT REQUIRED to come from $_POST,
      * but MUST be an array.
      *
-     * In cases where the request content cannot be coerced to an array, the
-     * parent getBody() method should be used to retrieve the body content.
-     *
      * @return array The deserialized body parameters, if any.
      */
     public function getBodyParams();
 
     /**
-     * Set the request body parameters.
-     *
-     * If the body content can be deserialized to an array, the values obtained
-     * MAY then be injected into the response using this method. This method
-     * will typically be invoked by a factory marshaling request parameters.
-     *
-     * @param array $values The deserialized body parameters, if any.
-     * @return void
-     * @throws \InvalidArgumentException For $values that cannot be accepted.
-     */
-    public function setBodyParams(array $values);
-
-    /**
      * Retrieve attributes derived from the request.
      *
-     * If a router or similar is used to match against the path and/or request,
-     * this method MAY be used to retrieve the results, so long as those
-     * results can be represented as an array.
+     * The request "attributes" may be used to allow injection of any
+     * parameters derived from the request: e.g., the results of path
+     * match operations; the results of decrypting cookies; the results of
+     * deserializing non-form-encoded message bodies; etc. Attributes
+     * will be application and request specific, and CAN be mutable.
      *
      * @return array Attributes derived from the request.
      */
     public function getAttributes();
 
     /**
-     * Set attributes derived from the request
+     * Retrieve a single derived request attribute.
+     * 
+     * Retrieves a single derived request attribute as described in
+     * getAttributes(). If the attribute has not been previously set, returns
+     * the default value as provided.
+     * 
+     * @see getAttributes()
+     * @param string $attribute Attribute name.
+     * @param mixed $default Default value to return if the attribute does not exist.
+     * @return mixed
+     */
+    public function getAttribute($attribute, $default = null);
+
+    /**
+     * Set attributes derived from the request.
      *
-     * If a router or similar is used to match against the path and/or request,
-     * this method MAY be used to inject the request with the results, so long
-     * as those results can be represented as an array.
+     * This method allows setting request attributes, as described in
+     * getAttributes().
      *
+     * @see getAttributes()
      * @param array $attributes Attributes derived from the request.
      * @return void
      */
     public function setAttributes(array $attributes);
+
+    /**
+     * Set a single derived request attribute.
+     * 
+     * This method allows setting a single derived request attribute as
+     * described in getAttributes().
+     *
+     * @see getAttributes()
+     * @param string $attribute The attribute name.
+     * @param mixed $value The value of the attribute.
+     * @return void
+     */
+    public function setAttribute($attribute, $value);
 }

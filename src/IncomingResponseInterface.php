@@ -3,12 +3,20 @@
 namespace Psr\Http\Message;
 
 /**
- * An HTTP response message.
+ * Representation of an incoming, client-side response.
+ * 
+ * Per the HTTP specification, this interface includes accessors for
+ * the following:
  *
- * @link http://tools.ietf.org/html/rfc7231#section-6
- * @link http://tools.ietf.org/html/rfc7231#section-7
+ * - Protocol version
+ * - Status code and reason phrase
+ * - Headers
+ * - Message body
+ *
+ * As the response is the result of making a request, it is considered
+ * immutable.
  */
-interface ResponseInterface extends MessageInterface
+interface IncomingResponseInterface extends MessageInterface
 {
     /**
      * Gets the response Status-Code.
@@ -19,14 +27,6 @@ interface ResponseInterface extends MessageInterface
      * @return integer Status code.
      */
     public function getStatusCode();
-
-    /**
-     * Sets the status code of this response.
-     *
-     * @param integer $code The 3-digit integer result code to set.
-     * @throws \InvalidArgumentException For invalid status code arguments.
-     */
-    public function setStatusCode($code);
 
     /**
      * Gets the response Reason-Phrase, a short textual description of the Status-Code.
@@ -42,16 +42,4 @@ interface ResponseInterface extends MessageInterface
      * @return string|null Reason phrase, or null if unknown.
      */
     public function getReasonPhrase();
-
-    /**
-     * Sets the Reason-Phrase of the response.
-     *
-     * If no Reason-Phrase is specified, implementations MAY choose to default
-     * to the RFC 7231 or IANA recommended reason phrase for the response's
-     * Status-Code.
-     *
-     * @param string $phrase The Reason-Phrase to set.
-     * @throws \InvalidArgumentException For non-string $phrase arguments.
-     */
-    public function setReasonPhrase($phrase);
 }
