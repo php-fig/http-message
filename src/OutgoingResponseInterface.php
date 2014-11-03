@@ -109,12 +109,11 @@ interface OutgoingResponseInterface extends MessageInterface
     /**
      * Sets the body of the message.
      *
-     * The body MUST be a StreamableInterface object. Setting the body to null MUST
-     * remove the existing body.
+     * The body MUST be a StreamableInterface object.
      *
-     * @param StreamableInterface|null $body Body.
+     * @param StreamableInterface $body Body.
      * @return void
      * @throws \InvalidArgumentException When the body is not valid.
      */
-    public function setBody(StreamableInterface $body = null);
+    public function setBody(StreamableInterface $body);
 }
