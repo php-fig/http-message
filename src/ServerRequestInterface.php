@@ -14,7 +14,7 @@ namespace Psr\Http\Message;
  * - Headers
  * - Message body
  *
- * Additionally, it encapsulates all data as it has arrived to the 
+ * Additionally, it encapsulates all data as it has arrived to the
  * application from the PHP environment, including:
  *
  * - The values represented in $_SERVER.
@@ -23,40 +23,27 @@ namespace Psr\Http\Message;
  * - Upload files, if any (as represented by $_FILES)
  * - Deserialized body parameters (generally from $_POST)
  *
- * The above values MUST be immutable, in order to ensure that all consumers of
- * the request instance within a given request cycle receive the same information.
+ * $_SERVER and $_FILES values MUST be treated as immutable, as they represent
+ * application state at the time of request. The other values SHOULD be
+ * mutable, as they can be restored from $_SERVER, $_FILES, or the request
+ * body, and may need treatment during the application (e.g., body parameters
+ * may be deserialized based on content type).
  *
  * Additionally, this interface recognizes the utility of introspecting a
- * request to derive and match additional parameters (e.g., via URI path 
+ * request to derive and match additional parameters (e.g., via URI path
  * matching, decrypting cookie values, deserializing non-form-encoded body
  * content, matching authorization headers to users, etc). These parameters
  * are stored in an "attributes" property, which MUST be mutable.
  */
-interface IncomingRequestInterface extends MessageInterface
+interface ServerRequestInterface extends RequestInterface
 {
-    /**
-     * Retrieves the HTTP method of the request.
-     *
-     * @return string Returns the request method.
-     */
-    public function getMethod();
-
-    /**
-     * Retrieves the request URL.
-     *
-     * @link http://tools.ietf.org/html/rfc3986#section-4.3
-     * @return string Returns the URL as a string. The URL SHOULD be an absolute
-     *     URI as specified in RFC 3986, but MAY be a relative URI.
-     */
-    public function getUrl();
-
     /**
      * Retrieve server parameters.
      *
-     * Retrieves data related to the incoming request environment, 
-     * typically derived from PHP's $_SERVER superglobal. The data IS NOT 
+     * Retrieves data related to the incoming request environment,
+     * typically derived from PHP's $_SERVER superglobal. The data IS NOT
      * REQUIRED to originate from $_SERVER.
-     * 
+     *
      * @return array
      */
     public function getServerParams();
@@ -66,18 +53,38 @@ interface IncomingRequestInterface extends MessageInterface
      *
      * Retrieves cookies sent by the client to the server.
      *
-     * The assumption is these are injected during instantiation, typically
-     * from PHP's $_COOKIE superglobal. The data IS NOT REQUIRED to come from
-     * $_COOKIE, but MUST be compatible with the structure of $_COOKIE.
+     * The data MUST be compatible with the structure of the $_COOKIE
+     * superglobal.
      *
      * @return array
      */
     public function getCookieParams();
 
     /**
+     * Set cookies.
+     *
+     * Set cookies sent by the client to the server.
+     *
+     * The data IS NOT REQUIRED to come from the $_COOKIE superglobal, but MUST
+     * be compatible with the structure of $_COOKIE. Typically, this data will
+     * be injected at instantiation.
+     *
+     * @param array $cookies Array of key/value pairs representing cookies.
+     * @return void
+     */
+    public function setCookieParams(array $cookies);
+
+    /**
      * Retrieve query string arguments.
      *
      * Retrieves the deserialized query string arguments, if any.
+     *
+     * @return array
+     */
+    public function getQueryParams();
+
+    /**
+     * Set query string arguments.
      *
      * These values SHOULD remain immutable over the course of the incoming
      * request. They MAY be injected during instantiation, such as from PHP's
@@ -87,9 +94,11 @@ interface IncomingRequestInterface extends MessageInterface
      * purposes of how duplicate query parameters are handled, and how nested
      * sets are handled.
      *
-     * @return array
+     * @param array $query Array of query string arguments, typically from
+     *     $_GET.
+     * @return void
      */
-    public function getQueryParams();
+    public function setQueryParams(array $query);
 
     /**
      * Retrieve the upload file metadata.
@@ -97,9 +106,9 @@ interface IncomingRequestInterface extends MessageInterface
      * This method MUST return file upload metadata in the same structure
      * as PHP's $_FILES superglobal.
      *
-     * These values SHOULD remain immutable over the course of the incoming
-     * request. They MAY be injected during instantiation, such as from PHP's
-     * $_FILES superglobal, or MAY be derived from other sources.
+     * These values MUST remain immutable over the course of the incoming
+     * request. They SHOULD be injected during instantiation, such as from PHP's
+     * $_FILES superglobal, but MAY be derived from other sources.
      *
      * @return array Upload file(s) metadata, if any.
      */
@@ -109,13 +118,27 @@ interface IncomingRequestInterface extends MessageInterface
      * Retrieve any parameters provided in the request body.
      *
      * If the request body can be deserialized to an array, this method MAY be
-     * used to retrieve them. These MAY be injected during instantiation from
-     * PHP's $_POST superglobal. The data IS NOT REQUIRED to come from $_POST,
-     * but MUST be an array.
+     * used to retrieve them.
      *
      * @return array The deserialized body parameters, if any.
      */
     public function getBodyParams();
+
+    /**
+     * Set parameters provided in the request body.
+     *
+     * These MAY be injected during instantiation from PHP's $_POST
+     * superglobal. The data IS NOT REQUIRED to come from $_POST, but MUST be
+     * an array. This method can be used during the request lifetime to inject
+     * parameters discovered and/or deserialized from the request body; as an
+     * example, if content negotiation determines that the request data is
+     * a JSON payload, this method could be used to inject the deserialized
+     * parameters.
+     *
+     * @param array $params The deserialized body parameters.
+     * @return void
+     */
+    public function setBodyParams(array $params);
 
     /**
      * Retrieve attributes derived from the request.
@@ -132,11 +155,11 @@ interface IncomingRequestInterface extends MessageInterface
 
     /**
      * Retrieve a single derived request attribute.
-     * 
+     *
      * Retrieves a single derived request attribute as described in
      * getAttributes(). If the attribute has not been previously set, returns
      * the default value as provided.
-     * 
+     *
      * @see getAttributes()
      * @param string $attribute Attribute name.
      * @param mixed $default Default value to return if the attribute does not exist.
@@ -158,7 +181,7 @@ interface IncomingRequestInterface extends MessageInterface
 
     /**
      * Set a single derived request attribute.
-     * 
+     *
      * This method allows setting a single derived request attribute as
      * described in getAttributes().
      *
