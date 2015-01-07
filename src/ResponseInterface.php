@@ -16,19 +16,8 @@ namespace Psr\Http\Message;
  * As the response CAN be built iteratively, the interface allows
  * mutability of all properties.
  */
-interface OutgoingResponseInterface extends MessageInterface
+interface ResponseInterface extends MessageInterface
 {
-    /**
-     * Set the HTTP protocol version.
-     *
-     * The version string MUST contain only the HTTP version number (e.g.,
-     * "1.1", "1.0").
-     *
-     * @param string $version HTTP protocol version
-     * @return void
-     */
-    public function setProtocolVersion($version);
-
     /**
      * Gets the response Status-Code.
      *
@@ -70,50 +59,4 @@ interface OutgoingResponseInterface extends MessageInterface
      * @return string|null Reason phrase, or null if unknown.
      */
     public function getReasonPhrase();
-
-    /**
-     * Sets a header, replacing any existing values of any headers with the
-     * same case-insensitive name.
-     *
-     * The header name is case-insensitive. The header values MUST be a string
-     * or an array of strings.
-     *
-     * @param string $header Header name
-     * @param string|string[] $value Header value(s).
-     * @return void
-     * @throws \InvalidArgumentException for invalid header names or values.
-     */
-    public function setHeader($header, $value);
-
-    /**
-     * Appends a header value for the specified header.
-     *
-     * Existing values for the specified header will be maintained. The new
-     * value(s) will be appended to the existing list.
-     *
-     * @param string $header Header name to add
-     * @param string|string[] $value Header value(s).
-     * @return void
-     * @throws \InvalidArgumentException for invalid header names or values.
-     */
-    public function addHeader($header, $value);
-
-    /**
-     * Remove a specific header by case-insensitive name.
-     *
-     * @param string $header HTTP header to remove
-     * @return void
-     */
-    public function removeHeader($header);
-
-    /**
-     * Sets the body of the message.
-     *
-     * The body MUST be a StreamableInterface object.
-     *
-     * @param StreamableInterface $body Body.
-     * @return void
-     * @throws \InvalidArgumentException When the body is not valid.
-     */
-    public function setBody(StreamableInterface $body);
 }
