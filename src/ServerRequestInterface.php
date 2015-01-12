@@ -5,8 +5,8 @@ namespace Psr\Http\Message;
 /**
  * Representation of an incoming, server-side HTTP request.
  *
- * Per the HTTP specification, this interface includes accessors for
- * the following:
+ * Per the HTTP specification, this interface includes properties for
+ * each of the following:
  *
  * - Protocol version
  * - HTTP method
@@ -24,16 +24,21 @@ namespace Psr\Http\Message;
  * - Deserialized body parameters (generally from $_POST)
  *
  * $_SERVER and $_FILES values MUST be treated as immutable, as they represent
- * application state at the time of request. The other values SHOULD be
- * mutable, as they can be restored from $_SERVER, $_FILES, or the request
- * body, and may need treatment during the application (e.g., body parameters
- * may be deserialized based on content type).
+ * application state at the time of request; as such, no methods are provided
+ * to allow modification of those values. The other values provide such methods,
+ * as they can be restored from $_SERVER, $_FILES, or the request body, and may
+ * need treatment during the application (e.g., body parameters may be
+ * deserialized based on content type).
  *
  * Additionally, this interface recognizes the utility of introspecting a
  * request to derive and match additional parameters (e.g., via URI path
  * matching, decrypting cookie values, deserializing non-form-encoded body
  * content, matching authorization headers to users, etc). These parameters
- * are stored in an "attributes" property, which MUST be mutable.
+ * are stored in an "attributes" property.
+ *
+ * Requests are considered immutable; all methods that might change state MUST
+ * be implemented such that they retain the internal state of the current
+ * message and return a new instance that contains the changed state.
  */
 interface ServerRequestInterface extends RequestInterface
 {
@@ -69,8 +74,12 @@ interface ServerRequestInterface extends RequestInterface
      * be compatible with the structure of $_COOKIE. Typically, this data will
      * be injected at instantiation.
      *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * updated cookie values.
+     *
      * @param array $cookies Array of key/value pairs representing cookies.
-     * @return void
+     * @return ServerRequestInterface
      */
     public function setCookieParams(array $cookies);
 
@@ -102,9 +111,13 @@ interface ServerRequestInterface extends RequestInterface
      * Setting query string arguments MUST NOT change the URL stored by the
      * request, nor the values in the server params.
      *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * updated query string arguments.
+     *
      * @param array $query Array of query string arguments, typically from
      *     $_GET.
-     * @return void
+     * @return ServerRequestInterface
      */
     public function setQueryParams(array $query);
 
@@ -143,8 +156,12 @@ interface ServerRequestInterface extends RequestInterface
      * a JSON payload, this method could be used to inject the deserialized
      * parameters.
      *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * updated body parameters.
+     *
      * @param array $params The deserialized body parameters.
-     * @return void
+     * @return ServerRequestInterface
      */
     public function setBodyParams(array $params);
 
@@ -181,9 +198,13 @@ interface ServerRequestInterface extends RequestInterface
      * This method allows setting request attributes, as described in
      * getAttributes().
      *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * updated attributes.
+     *
      * @see getAttributes()
      * @param array $attributes Attributes derived from the request.
-     * @return void
+     * @return ServerRequestInterface
      */
     public function setAttributes(array $attributes);
 
@@ -193,10 +214,14 @@ interface ServerRequestInterface extends RequestInterface
      * This method allows setting a single derived request attribute as
      * described in getAttributes().
      *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * updated attribute.
+     *
      * @see getAttributes()
      * @param string $attribute The attribute name.
      * @param mixed $value The value of the attribute.
-     * @return void
+     * @return ServerRequestInterface
      */
     public function setAttribute($attribute, $value);
 }

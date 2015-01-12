@@ -5,8 +5,8 @@ namespace Psr\Http\Message;
 /**
  * Representation of an outgoing, client-side request.
  *
- * Per the HTTP specification, this interface includes both accessors for
- * and mutators for the following:
+ * Per the HTTP specification, this interface includes properties for
+ * each of the following:
  *
  * - Protocol version
  * - HTTP method
@@ -14,8 +14,9 @@ namespace Psr\Http\Message;
  * - Headers
  * - Message body
  *
- * As the request CAN be built iteratively, the interface allows
- * mutability of all properties.
+ * Requests are considered immutable; all methods that might change state MUST
+ * be implemented such that they retain the internal state of the current
+ * message and return a new instance that contains the changed state.
  */
 interface RequestInterface extends MessageInterface
 {
@@ -34,8 +35,12 @@ interface RequestInterface extends MessageInterface
      * method names are case-sensitive and thus implementations SHOULD NOT
      * modify the given string.
      *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * changed request method.
+     *
      * @param string $method Case-insensitive method.
-     * @return void
+     * @return RequestInterface
      * @throws \InvalidArgumentException for invalid HTTP methods.
      */
     public function setMethod($method);
@@ -78,9 +83,13 @@ interface RequestInterface extends MessageInterface
      * When setting the absolute URI, the url (see getUrl() and setUrl()) MUST
      * be updated.
      *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * changed URI and updated URL.
+     *
      * @link http://tools.ietf.org/html/rfc3986#section-4.3
      * @param string $uri Absolute request URI.
-     * @return void
+     * @return RequestInterface
      * @throws \InvalidArgumentException If the URI is invalid.
      */
     public function setAbsoluteUri($uri);
@@ -106,9 +115,13 @@ interface RequestInterface extends MessageInterface
      * When setting the URL, the absolute URI (see getAbsoluteUri() and
      * setAbsoluteUri()) MUST be updated.
      *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * changed URL and updated absolute URI.
+     *
      * @link http://tools.ietf.org/html/rfc7230#section-5.3
      * @param string $url Request URL, with path and optionally query string.
-     * @return void
+     * @return RequestInterface
      * @throws \InvalidArgumentException If the URL is invalid.
      */
     public function setUrl($url);

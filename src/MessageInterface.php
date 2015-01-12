@@ -7,6 +7,10 @@ namespace Psr\Http\Message;
  * from a server to a client. This interface defines the methods common to
  * each.
  *
+ * Messages are considered immutable; all methods that might change state MUST
+ * be implemented such that they retain the internal state of the current
+ * message and return a new instance that contains the changed state.
+ *
  * @link http://www.ietf.org/rfc/rfc7230.txt
  * @link http://www.ietf.org/rfc/rfc7231.txt
  */
@@ -27,8 +31,12 @@ interface MessageInterface
      * The version string MUST contain only the HTTP version number (e.g.,
      * "1.1", "1.0").
      *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * new protocol version.
+     *
      * @param string $version HTTP protocol version
-     * @return void
+     * @return MessageInterface
      */
     public function setProtocolVersion($version);
 
@@ -95,9 +103,13 @@ interface MessageInterface
      * The header name is case-insensitive. The header values MUST be a string
      * or an array of strings.
      *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * new and/or updated header and value.
+     *
      * @param string $header Header name
      * @param string|string[] $value Header value(s).
-     * @return void
+     * @return MessageInterface
      * @throws \InvalidArgumentException for invalid header names or values.
      */
     public function setHeader($header, $value);
@@ -108,9 +120,13 @@ interface MessageInterface
      * Existing values for the specified header will be maintained. The new
      * value(s) will be appended to the existing list.
      *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * new header and/or value.
+     *
      * @param string $header Header name to add
      * @param string|string[] $value Header value(s).
-     * @return void
+     * @return MessageInterface
      * @throws \InvalidArgumentException for invalid header names or values.
      */
     public function addHeader($header, $value);
@@ -118,8 +134,12 @@ interface MessageInterface
     /**
      * Remove a specific header by case-insensitive name.
      *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that removes
+     * the named header.
+     *
      * @param string $header HTTP header to remove
-     * @return void
+     * @return MessageInterface
      */
     public function removeHeader($header);
 
@@ -135,8 +155,12 @@ interface MessageInterface
      *
      * The body MUST be a StreamableInterface object.
      *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * new body stream.
+     *
      * @param StreamableInterface $body Body.
-     * @return void
+     * @return MessageInterface
      * @throws \InvalidArgumentException When the body is not valid.
      */
     public function setBody(StreamableInterface $body);
