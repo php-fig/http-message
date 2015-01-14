@@ -66,9 +66,7 @@ interface ServerRequestInterface extends RequestInterface
     public function getCookieParams();
 
     /**
-     * Set cookies.
-     *
-     * Set cookies sent by the client to the server.
+     * Create a new instance with the specified cookies.
      *
      * The data IS NOT REQUIRED to come from the $_COOKIE superglobal, but MUST
      * be compatible with the structure of $_COOKIE. Typically, this data will
@@ -81,7 +79,7 @@ interface ServerRequestInterface extends RequestInterface
      * @param array $cookies Array of key/value pairs representing cookies.
      * @return ServerRequestInterface
      */
-    public function setCookieParams(array $cookies);
+    public function withCookieParams(array $cookies);
 
     /**
      * Retrieve query string arguments.
@@ -98,7 +96,7 @@ interface ServerRequestInterface extends RequestInterface
     public function getQueryParams();
 
     /**
-     * Set query string arguments.
+     * Create a new instance with the specified query string arguments.
      *
      * These values SHOULD remain immutable over the course of the incoming
      * request. They MAY be injected during instantiation, such as from PHP's
@@ -119,7 +117,7 @@ interface ServerRequestInterface extends RequestInterface
      *     $_GET.
      * @return ServerRequestInterface
      */
-    public function setQueryParams(array $query);
+    public function withQueryParams(array $query);
 
     /**
      * Retrieve the upload file metadata.
@@ -146,7 +144,7 @@ interface ServerRequestInterface extends RequestInterface
     public function getBodyParams();
 
     /**
-     * Set parameters provided in the request body.
+     * Create a new instance with the specified body parameters.
      *
      * These MAY be injected during instantiation from PHP's $_POST
      * superglobal. The data IS NOT REQUIRED to come from $_POST, but MUST be
@@ -163,7 +161,7 @@ interface ServerRequestInterface extends RequestInterface
      * @param array $params The deserialized body parameters.
      * @return ServerRequestInterface
      */
-    public function setBodyParams(array $params);
+    public function withBodyParams(array $params);
 
     /**
      * Retrieve attributes derived from the request.
@@ -193,7 +191,8 @@ interface ServerRequestInterface extends RequestInterface
     public function getAttribute($attribute, $default = null);
 
     /**
-     * Set attributes derived from the request.
+     * Create a new instance with the specified attributes as derived from the
+     * request.
      *
      * This method allows setting request attributes, as described in
      * getAttributes().
@@ -206,10 +205,10 @@ interface ServerRequestInterface extends RequestInterface
      * @param array $attributes Attributes derived from the request.
      * @return ServerRequestInterface
      */
-    public function setAttributes(array $attributes);
+    public function withAttributes(array $attributes);
 
     /**
-     * Set a single derived request attribute.
+     * Create a new instance with the specified derived request attribute.
      *
      * This method allows setting a single derived request attribute as
      * described in getAttributes().
@@ -223,5 +222,5 @@ interface ServerRequestInterface extends RequestInterface
      * @param mixed $value The value of the attribute.
      * @return ServerRequestInterface
      */
-    public function setAttribute($attribute, $value);
+    public function withAttribute($attribute, $value);
 }

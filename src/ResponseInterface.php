@@ -30,7 +30,8 @@ interface ResponseInterface extends MessageInterface
     public function getStatusCode();
 
     /**
-     * Sets the status code, and optionally reason phrase,  of this response.
+     * Create a new instance with the specified status code, and optionally
+     * reason phrase, for the response.
      *
      * If no Reason-Phrase is specified, implementations MAY choose to default
      * to the RFC 7231 or IANA recommended reason phrase for the response's
@@ -49,7 +50,7 @@ interface ResponseInterface extends MessageInterface
      * @return ResponseInterface
      * @throws \InvalidArgumentException For invalid status code arguments.
      */
-    public function setStatus($code, $reasonPhrase = null);
+    public function withStatus($code, $reasonPhrase = null);
 
     /**
      * Gets the response Reason-Phrase, a short textual description of the Status-Code.

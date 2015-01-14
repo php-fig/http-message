@@ -28,8 +28,8 @@ interface RequestInterface extends MessageInterface
     public function getMethod();
 
     /**
-     * Sets the HTTP method to be performed on the resource identified by the
-     * Request-URI.
+     * Create a new instance with the provided HTTP method to perform on the
+     * resource identified by the Request-URI.
      *
      * While HTTP method names are typically all uppercase characters, HTTP
      * method names are case-sensitive and thus implementations SHOULD NOT
@@ -43,7 +43,7 @@ interface RequestInterface extends MessageInterface
      * @return RequestInterface
      * @throws \InvalidArgumentException for invalid HTTP methods.
      */
-    public function setMethod($method);
+    public function withMethod($method);
 
     /**
      * Retrieves the absolute URI.
@@ -70,7 +70,7 @@ interface RequestInterface extends MessageInterface
     public function getAbsoluteUri();
 
     /**
-     * Sets the absolute URI of the request.
+     * Create a new instance with the provided absolute URI.
      *
      * The absolute URI MUST be a string, and MUST include the scheme and host.
      *
@@ -92,7 +92,7 @@ interface RequestInterface extends MessageInterface
      * @return RequestInterface
      * @throws \InvalidArgumentException If the URI is invalid.
      */
-    public function setAbsoluteUri($uri);
+    public function withAbsoluteUri($uri);
 
     /**
      * Retrieves the request URL.
@@ -106,7 +106,7 @@ interface RequestInterface extends MessageInterface
     public function getUrl();
 
     /**
-     * Sets the request URL.
+     * Create a new instance with the specified request URL.
      *
      * The URL MUST be a string. The URL SHOULD be an origin-form (path + query
      * string) per RFC 7230 section 5.3; if other URL parts are present, the
@@ -124,5 +124,5 @@ interface RequestInterface extends MessageInterface
      * @return RequestInterface
      * @throws \InvalidArgumentException If the URL is invalid.
      */
-    public function setUrl($url);
+    public function withUrl($url);
 }

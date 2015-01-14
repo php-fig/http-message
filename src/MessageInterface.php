@@ -26,7 +26,7 @@ interface MessageInterface
     public function getProtocolVersion();
 
     /**
-     * Set the HTTP protocol version.
+     * Create a new instance with the specified HTTP protocol version.
      *
      * The version string MUST contain only the HTTP version number (e.g.,
      * "1.1", "1.0").
@@ -38,7 +38,7 @@ interface MessageInterface
      * @param string $version HTTP protocol version
      * @return MessageInterface
      */
-    public function setProtocolVersion($version);
+    public function withProtocolVersion($version);
 
     /**
      * Gets all message headers.
@@ -97,8 +97,8 @@ interface MessageInterface
     public function getHeaderLines($header);
 
     /**
-     * Sets a header, replacing any existing values of any headers with the
-     * same case-insensitive name.
+     * Create a new instance with the provided header, replacing any existing
+     * values of any headers with the same case-insensitive name.
      *
      * The header name is case-insensitive. The header values MUST be a string
      * or an array of strings.
@@ -112,10 +112,11 @@ interface MessageInterface
      * @return MessageInterface
      * @throws \InvalidArgumentException for invalid header names or values.
      */
-    public function setHeader($header, $value);
+    public function withHeader($header, $value);
 
     /**
-     * Appends a header value for the specified header.
+     * Creates a new instance, with the specified header appended with the
+     * given value.
      *
      * Existing values for the specified header will be maintained. The new
      * value(s) will be appended to the existing list.
@@ -129,10 +130,12 @@ interface MessageInterface
      * @return MessageInterface
      * @throws \InvalidArgumentException for invalid header names or values.
      */
-    public function addHeader($header, $value);
+    public function withAddedHeader($header, $value);
 
     /**
-     * Remove a specific header by case-insensitive name.
+     * Creates a new instance, without the specified header.
+     *
+     * Header resolution MUST be done without case-insensitivity.
      *
      * This method MUST be implemented in such a way as to retain the
      * immutability of the message, and MUST return a new instance that removes
@@ -141,7 +144,7 @@ interface MessageInterface
      * @param string $header HTTP header to remove
      * @return MessageInterface
      */
-    public function removeHeader($header);
+    public function withoutHeader($header);
 
     /**
      * Gets the body of the message.
@@ -151,7 +154,7 @@ interface MessageInterface
     public function getBody();
 
     /**
-     * Sets the body of the message.
+     * Create a new instance, with the specified message body.
      *
      * The body MUST be a StreamableInterface object.
      *
@@ -163,5 +166,5 @@ interface MessageInterface
      * @return MessageInterface
      * @throws \InvalidArgumentException When the body is not valid.
      */
-    public function setBody(StreamableInterface $body);
+    public function withBody(StreamableInterface $body);
 }
