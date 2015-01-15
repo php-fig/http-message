@@ -27,22 +27,36 @@ interface UriInterface
     /**
      * Retrieve the authority portion of the URI.
      *
-     * The authority portion of a URI when present, can consist of a username,
-     * and optionally the password/credentials for that user. The return MUST
-     * be a string, in the format of "username[:password]", where the colon and
-     * password are only present if they were provided. (Brackets MUST NOT be
-     * present; they are used here to indicate that those items are optional)
+     * The authority portion of the URI is:
      *
-     * The string returned MUST strip off the trailing "@" delimiter if
-     * present.
+     * <pre>
+     * [user-info@]host[:port]
+     * </pre>
+     *
+     * If the port component is not set or is the standard port for the current
+     * scheme, it SHOULD NOT be included.
      *
      * This method MUST return an empty string if no authority information is
      * present.
      *
-     * @return string Authority portion of the URI, in "username[:password]"
+     * @return string Authority portion of the URI, in "[user-info@]host[:port]"
      *     format.
      */
     public function getAuthority();
+
+    /**
+     * Retrieve the user information portion of the URI, if present.
+     *
+     * If a user is present in the URI, this will return that value;
+     * additionally, if the password is also present, it will be appended to the
+     * user value, with a colon (":") separating the values.
+     *
+     * Implementations MUST NOT return the "@" suffix when returning this value.
+     *
+     * @return string User information portion of the URI, if present, in
+     *     "username[:password]" format.
+     */
+    public function getUserInfo();
 
     /**
      * Retrieve the host segment of the URI.
@@ -119,20 +133,20 @@ interface UriInterface
     public function withScheme($scheme);
 
     /**
-     * Create a new instance with the specified authority information.
+     * Create a new instance with the specified user information.
      *
      * This method MUST retain the state of the current instance, and return
-     * a new instance that contains the specified authority information.
+     * a new instance that contains the specified user information.
      *
-     * Password is optional, but the authority information MUST include the
+     * Password is optional, but the user information MUST include the
      * user.
      *
      * @param string $user User name to use for authority.
      * @param null|string $password Password associated with $user.
-     * @return UriInterface A new instance with the specified authority
+     * @return UriInterface A new instance with the specified user
      *     information.
      */
-    public function withAuthority($user, $password = null);
+    public function withUserInfo($user, $password = null);
 
     /**
      * Create a new instance with the specified host.
@@ -208,18 +222,20 @@ interface UriInterface
      * Origin-form is a URI that includes only the path and optionally the
      * query string.
      *
+     * @see http://tools.ietf.org/html/rfc7230#section-5.3.1
      * @return bool
      */
-    public function isOriginForm();
+    public function isOrigin();
 
     /**
      * Indicate whether the URI is absolute.
      *
      * An absolute URI contains minimally the scheme and host.
      *
+     * @see http://tools.ietf.org/html/rfc7230#section-5.3.2
      * @return bool
      */
-    public function isAbsoluteForm();
+    public function isAbsolute();
 
     /**
      * Indicate whether the URI is in authority form.
@@ -227,18 +243,20 @@ interface UriInterface
      * An authority-form URI is an absolute URI that also contains authority
      * information.
      *
+     * @see http://tools.ietf.org/html/rfc7230#section-5.3.3
      * @return bool
      */
-    public function isAuthorityForm();
+    public function isAuthority();
 
     /**
-     * Indicate whether the URI is an asterix form.
+     * Indicate whether the URI is an asterisk-form.
      *
-     * An asterix form URI will have "*" as the path, and no other URI parts.
+     * An asterisk form URI will have "*" as the path, and no other URI parts.
      *
+     * @see http://tools.ietf.org/html/rfc7230#section-5.3.4
      * @return bool
      */
-    public function isAsterixForm();
+    public function isAsterisk();
 
     /**
      * Return the string representation of the URI.
