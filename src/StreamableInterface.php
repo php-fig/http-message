@@ -84,6 +84,17 @@ interface StreamableInterface
     public function seek($offset, $whence = SEEK_SET);
 
     /**
+     * Seek to the beginning of the stream.
+     *
+     * If the stream is not seekable, this method will return FALSE, indicating
+     * failure; otherwise, it will perform a seek(0), and return the status of
+     * that operation.
+     *
+     * @return bool Returns TRUE on success or FALSE on failure.
+     */
+    public function rewind();
+
+    /**
      * Returns whether or not the stream is writable.
      *
      * @return bool
