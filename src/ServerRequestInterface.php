@@ -10,12 +10,12 @@ namespace Psr\Http\Message;
  *
  * - Protocol version
  * - HTTP method
- * - URL
+ * - URI
  * - Headers
  * - Message body
  *
  * Additionally, it encapsulates all data as it has arrived to the
- * application from the PHP environment, including:
+ * application from the CGI and/or PHP environment, including:
  *
  * - The values represented in $_SERVER.
  * - Any cookies provided (generally via $_COOKIE)
@@ -77,7 +77,7 @@ interface ServerRequestInterface extends RequestInterface
      * updated cookie values.
      *
      * @param array $cookies Array of key/value pairs representing cookies.
-     * @return ServerRequestInterface
+     * @return self
      */
     public function withCookieParams(array $cookies);
 
@@ -102,7 +102,7 @@ interface ServerRequestInterface extends RequestInterface
      * request. They MAY be injected during instantiation, such as from PHP's
      * $_GET superglobal, or MAY be derived from some other value such as the
      * URI. In cases where the arguments are parsed from the URI, the data
-     * MUST be compatible with what PHP's `parse_str()` would return for
+     * MUST be compatible with what PHP's parse_str() would return for
      * purposes of how duplicate query parameters are handled, and how nested
      * sets are handled.
      *
@@ -115,7 +115,7 @@ interface ServerRequestInterface extends RequestInterface
      *
      * @param array $query Array of query string arguments, typically from
      *     $_GET.
-     * @return ServerRequestInterface
+     * @return self
      */
     public function withQueryParams(array $query);
 
@@ -159,7 +159,7 @@ interface ServerRequestInterface extends RequestInterface
      * updated body parameters.
      *
      * @param array $params The deserialized body parameters.
-     * @return ServerRequestInterface
+     * @return self
      */
     public function withBodyParams(array $params);
 
@@ -183,29 +183,15 @@ interface ServerRequestInterface extends RequestInterface
      * getAttributes(). If the attribute has not been previously set, returns
      * the default value as provided.
      *
+     * This method obviates the need for a hasAttribute() method, as it allows
+     * specifying a default value to return if the attribute is not found.
+     *
      * @see getAttributes()
      * @param string $attribute Attribute name.
      * @param mixed $default Default value to return if the attribute does not exist.
      * @return mixed
      */
     public function getAttribute($attribute, $default = null);
-
-    /**
-     * Create a new instance with the specified attributes as derived from the
-     * request.
-     *
-     * This method allows setting request attributes, as described in
-     * getAttributes().
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return a new instance that has the
-     * updated attributes.
-     *
-     * @see getAttributes()
-     * @param array $attributes Attributes derived from the request.
-     * @return ServerRequestInterface
-     */
-    public function withAttributes(array $attributes);
 
     /**
      * Create a new instance with the specified derived request attribute.
@@ -220,7 +206,25 @@ interface ServerRequestInterface extends RequestInterface
      * @see getAttributes()
      * @param string $attribute The attribute name.
      * @param mixed $value The value of the attribute.
-     * @return ServerRequestInterface
+     * @return self
      */
     public function withAttribute($attribute, $value);
+
+    /**
+     * Create a new instance that removes the specified derived request
+     * attribute.
+     *
+     * This method allows removing a single derived request attribute as
+     * described in getAttributes().
+     *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that removes
+     * the attribute.
+     *
+     * @see getAttributes()
+     * @param string $attribute The attribute name.
+     * @param mixed $value The value of the attribute.
+     * @return self
+     */
+    public function withoutAttribute($attribute, $value);
 }

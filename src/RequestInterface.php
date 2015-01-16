@@ -28,8 +28,7 @@ interface RequestInterface extends MessageInterface
     public function getMethod();
 
     /**
-     * Create a new instance with the provided HTTP method to perform on the
-     * resource identified by the Request-URI.
+     * Create a new instance with the provided HTTP method.
      *
      * While HTTP method names are typically all uppercase characters, HTTP
      * method names are case-sensitive and thus implementations SHOULD NOT
@@ -40,13 +39,13 @@ interface RequestInterface extends MessageInterface
      * changed request method.
      *
      * @param string $method Case-insensitive method.
-     * @return RequestInterface
+     * @return self
      * @throws \InvalidArgumentException for invalid HTTP methods.
      */
     public function withMethod($method);
 
     /**
-     * Retrieves the absolute URI.
+     * Retrieves the URI instance.
      *
      * This method MUST return a UriInterface instance.
      *
@@ -65,7 +64,7 @@ interface RequestInterface extends MessageInterface
      *
      * @link http://tools.ietf.org/html/rfc3986#section-4.3
      * @param UriInterface $uri New request URI to use.
-     * @return RequestInterface
+     * @return self
      */
     public function withUri(UriInterface $uri);
 }

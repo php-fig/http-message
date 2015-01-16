@@ -17,7 +17,7 @@ namespace Psr\Http\Message;
 interface MessageInterface
 {
     /**
-     * Gets the HTTP protocol version as a string.
+     * Retrieves the HTTP protocol version as a string.
      *
      * The string MUST contain only the HTTP version number (e.g., "1.1", "1.0").
      *
@@ -36,12 +36,12 @@ interface MessageInterface
      * new protocol version.
      *
      * @param string $version HTTP protocol version
-     * @return MessageInterface
+     * @return self
      */
     public function withProtocolVersion($version);
 
     /**
-     * Gets all message headers.
+     * Retrieves all message headers.
      *
      * The keys represent the header name as it will be sent over the wire, and
      * each value is an array of strings associated with the header.
@@ -81,7 +81,8 @@ interface MessageInterface
      * a comma.
      *
      * NOTE: Not all header values may be appropriately represented using
-     * comma concatenation.
+     * comma concatenation. For such headers, use getHeaderLines() instead
+     * and supply your own delimiter when concatenating.
      *
      * @param string $header Case-insensitive header name.
      * @return string
@@ -109,7 +110,7 @@ interface MessageInterface
      *
      * @param string $header Header name
      * @param string|string[] $value Header value(s).
-     * @return MessageInterface
+     * @return self
      * @throws \InvalidArgumentException for invalid header names or values.
      */
     public function withHeader($header, $value);
@@ -119,7 +120,8 @@ interface MessageInterface
      * given value.
      *
      * Existing values for the specified header will be maintained. The new
-     * value(s) will be appended to the existing list.
+     * value(s) will be appended to the existing list. If the header did not
+     * exist previously, it will be added.
      *
      * This method MUST be implemented in such a way as to retain the
      * immutability of the message, and MUST return a new instance that has the
@@ -127,7 +129,7 @@ interface MessageInterface
      *
      * @param string $header Header name to add
      * @param string|string[] $value Header value(s).
-     * @return MessageInterface
+     * @return self
      * @throws \InvalidArgumentException for invalid header names or values.
      */
     public function withAddedHeader($header, $value);
@@ -135,14 +137,14 @@ interface MessageInterface
     /**
      * Creates a new instance, without the specified header.
      *
-     * Header resolution MUST be done without case-insensitivity.
+     * Header resolution MUST be done without case-sensitivity.
      *
      * This method MUST be implemented in such a way as to retain the
      * immutability of the message, and MUST return a new instance that removes
      * the named header.
      *
      * @param string $header HTTP header to remove
-     * @return MessageInterface
+     * @return self
      */
     public function withoutHeader($header);
 
@@ -163,7 +165,7 @@ interface MessageInterface
      * new body stream.
      *
      * @param StreamableInterface $body Body.
-     * @return MessageInterface
+     * @return self
      * @throws \InvalidArgumentException When the body is not valid.
      */
     public function withBody(StreamableInterface $body);

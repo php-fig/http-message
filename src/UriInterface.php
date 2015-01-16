@@ -4,21 +4,24 @@ namespace Psr\Http\Message;
 /**
  * Value object representing a URI.
  *
- * @see http://tools.ietf.org/html/rfc3986 (the URI specification)
- * @see http://tools.ietf.org/html/rfc7230#section-2.7 (URIs as used in the HTTP specification)
+ * URIs are considered immutable; all methods that might change state MUST
+ * be implemented such that they retain the internal state of the current
+ * instance and return a new instance that contains the changed state.
+ *
+ * @link http://tools.ietf.org/html/rfc3986 (the URI specification)
+ * @link http://tools.ietf.org/html/rfc7230#section-2.7 (URIs as used in the HTTP specification)
  */
 interface UriInterface
 {
     /**
      * Retrieve the URI scheme.
      *
-     * Generally this will be one of "http" or "https", but implementations may
-     * allow for other schemes when desired.
+     * Implementations SHOULD restrict values to "http", "https", or an empty
+     * string but MAY accommodate other schemes if required.
      *
      * If no scheme is present, this method MUST return an empty string.
      *
-     * The string returned MUST strip off the "://" trailing delimiter if
-     * present.
+     * The string returned MUST omit the trailing "://" delimiter if present.
      *
      * @return string The scheme of the URI.
      */
@@ -79,7 +82,7 @@ interface UriInterface
      * a null value.
      *
      * If no port is present, but a scheme is present, this method MAY return
-     * the standard port for that scheme.
+     * the standard port for that scheme, but SHOULD return null.
      *
      * @return null|int The port for the URI.
      */
@@ -101,7 +104,7 @@ interface UriInterface
      * This method MUST return a string; if no query string is present, it MUST
      * return an empty string.
      *
-     * The string returned MUST strip off any leading "?" character.
+     * The string returned MUST omit the leading "?" character.
      *
      * @return string The URI query string.
      */
@@ -113,7 +116,7 @@ interface UriInterface
      * This method MUST return a string; if no fragment is present, it MUST
      * return an empty string.
      *
-     * The string returned MUST strip off any leading "#" character.
+     * The string returned MUST omit the leading "#" character.
      *
      * @return string The URI fragment.
      */
@@ -126,8 +129,13 @@ interface UriInterface
      * a new instance that contains the specified scheme. If the scheme
      * provided includes the "://" delimiter, it MUST be removed.
      *
+     * Implementations SHOULD restrict values to "http", "https", or an empty
+     * string but MAY accommodate other schemes if required.
+     *
+     * An empty scheme is equivalent to removing the scheme.
+     *
      * @param string $scheme The scheme to use with the new instance.
-     * @return UriInterface A new instance with the specified scheme.
+     * @return self A new instance with the specified scheme.
      * @throws \InvalidArgumentException for invalid or unsupported schemes.
      */
     public function withScheme($scheme);
@@ -139,12 +147,12 @@ interface UriInterface
      * a new instance that contains the specified user information.
      *
      * Password is optional, but the user information MUST include the
-     * user.
+     * user; an empty string for the user is equivalent to removing user
+     * information.
      *
      * @param string $user User name to use for authority.
      * @param null|string $password Password associated with $user.
-     * @return UriInterface A new instance with the specified user
-     *     information.
+     * @return self A new instance with the specified user information.
      */
     public function withUserInfo($user, $password = null);
 
@@ -154,8 +162,10 @@ interface UriInterface
      * This method MUST retain the state of the current instance, and return
      * a new instance that contains the specified host.
      *
+     * An empty host value is equivalent to removing the host.
+     *
      * @param string $host Hostname to use with the new instance.
-     * @return UriInterface A new instance with the specified host.
+     * @return self A new instance with the specified host.
      * @throws \InvalidArgumentException for invalid hostnames.
      */
     public function withHost($host);
@@ -166,8 +176,15 @@ interface UriInterface
      * This method MUST retain the state of the current instance, and return
      * a new instance that contains the specified port.
      *
-     * @param int $port Port to use with the new instance.
-     * @return UriInterface A new instance with the specified port.
+     * Implementations MUST raise an exception for ports outside the
+     * established TCP and UDP port ranges.
+     *
+     * A null value provided for the port is equivalent to removing the port
+     * information.
+     *
+     * @param null|int $port Port to use with the new instance; a null value
+     *     removes the port information.
+     * @return self A new instance with the specified port.
      * @throws \InvalidArgumentException for invalid ports.
      */
     public function withPort($port);
@@ -181,8 +198,10 @@ interface UriInterface
      * The path MUST be prefixed with "/"; if not, the implementation MAY
      * provide the prefix itself.
      *
+     * An empty path value is equivalent to removing the path.
+     *
      * @param string $path The path to use with the new instance.
-     * @return UriInterface A new instance with the specified path.
+     * @return self A new instance with the specified path.
      * @throws \InvalidArgumentException for invalid paths.
      */
     public function withPath($path);
@@ -197,8 +216,10 @@ interface UriInterface
      * Additionally, the query string SHOULD be parseable by parse_str() in
      * order to be valid.
      *
+     * An empty query string value is equivalent to removing the query string.
+     *
      * @param string $query The query string to use with the new instance.
-     * @return UriInterface A new instance with the specified query string.
+     * @return self A new instance with the specified query string.
      * @throws \InvalidArgumentException for invalid query strings.
      */
     public function withQuery($query);
@@ -211,18 +232,20 @@ interface UriInterface
      *
      * If the fragment is prefixed by "#", that character MUST be removed.
      *
+     * An empty fragment value is equivalent to removing the fragment.
+     *
      * @param string $fragment The URI fragment to use with the new instance.
-     * @return UriInterface A new instance with the specified URI fragment.
+     * @return self A new instance with the specified URI fragment.
      */
     public function withFragment($fragment);
 
     /**
      * Indicate whether the URI is in origin-form.
      *
-     * Origin-form is a URI that includes only the path and optionally the
+     * Origin-form is a URI that includes only the path, and optionally the
      * query string.
      *
-     * @see http://tools.ietf.org/html/rfc7230#section-5.3.1
+     * @link http://tools.ietf.org/html/rfc7230#section-5.3.1
      * @return bool
      */
     public function isOrigin();
@@ -230,9 +253,11 @@ interface UriInterface
     /**
      * Indicate whether the URI is absolute.
      *
-     * An absolute URI contains minimally the scheme and host.
+     * An absolute URI contains minimally a non-empty scheme and non-empty
+     * authority.
      *
-     * @see http://tools.ietf.org/html/rfc7230#section-5.3.2
+     * @see getAuthority()
+     * @link http://tools.ietf.org/html/rfc7230#section-5.3.2
      * @return bool
      */
     public function isAbsolute();
@@ -240,10 +265,11 @@ interface UriInterface
     /**
      * Indicate whether the URI is in authority form.
      *
-     * An authority-form URI is an absolute URI that also contains authority
+     * An authority-form URI is an URI that contains ONLY the authority
      * information.
      *
-     * @see http://tools.ietf.org/html/rfc7230#section-5.3.3
+     * @see getAuthority()
+     * @link http://tools.ietf.org/html/rfc7230#section-5.3.3
      * @return bool
      */
     public function isAuthority();
@@ -251,9 +277,10 @@ interface UriInterface
     /**
      * Indicate whether the URI is an asterisk-form.
      *
-     * An asterisk form URI will have "*" as the path, and no other URI parts.
+     * An asterisk form URI will contain "*" as the path, and no other URI
+     * segments.
      *
-     * @see http://tools.ietf.org/html/rfc7230#section-5.3.4
+     * @link http://tools.ietf.org/html/rfc7230#section-5.3.4
      * @return bool
      */
     public function isAsterisk();
@@ -265,11 +292,8 @@ interface UriInterface
      * delimiters:
      *
      * - If a scheme is present, "://" MUST append the value.
-     * - If authority information is present, the password MUST be separated
-     *   from the user by a ":", and the full authority string MUST be appended
-     *   with an "@" character.
-     * - If a port is present, and non-standard for the given scheme, it MUST
-     *   be provided, and MUST be prefixed by a ":" character.
+     * - If the authority information is present, that value will be
+     *   contatenated.
      * - If a path is present, it MUST be prefixed by a "/" character.
      * - If a query string is present, it MUST be prefixed by a "?" character.
      * - If a URI fragment is present, it MUST be prefixed by a "#" character.
