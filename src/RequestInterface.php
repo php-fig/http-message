@@ -47,11 +47,11 @@ interface RequestInterface extends MessageInterface
     /**
      * Retrieves the URI instance.
      *
-     * This method MUST return a UriInterface instance.
+     * This method MUST return a UriTargetInterface instance.
      *
      * @link http://tools.ietf.org/html/rfc3986#section-4.3
-     * @return UriInterface Returns a UriInterface instance representing the
-     *     URI of the request, if any.
+     * @return UriTargetInterface Returns a UriTargetInterface instance
+     *     representing the URI of the request, if any.
      */
     public function getUri();
 
@@ -60,11 +60,11 @@ interface RequestInterface extends MessageInterface
      *
      * This method MUST be implemented in such a way as to retain the
      * immutability of the message, and MUST return a new instance that has the
-     * new UriInterface instance.
+     * new UriTargetInterface instance.
      *
      * @link http://tools.ietf.org/html/rfc3986#section-4.3
-     * @param UriInterface $uri New request URI to use.
+     * @param UriTargetInterface $uri New request URI to use.
      * @return self
      */
-    public function withUri(UriInterface $uri);
+    public function withUri(UriTargetInterface $uri);
 }

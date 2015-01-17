@@ -4,25 +4,28 @@ namespace Psr\Http\Message;
 /**
  * Value object representing the request target, and typically a URI.
  *
- * Instances of this interface  are considered immutable; all methods that
+ * Instances of this interface are considered immutable; all methods that
  * might change state MUST be implemented such that they retain the internal
  * state of the current instance and return a new instance that contains the
  * changed state.
  *
  * Since this interface represents a request target per RFC 7230, the instance
- * can potentially omit the scheme and authority. As such, test methods exist
- * for determining what request target form is in use:
+ * MAY represent an absolute URI OR one of the request targets that are not
+ * fully qualified URIs, including origin-form, authority-form, or
+ * asterisk-form. As such, test methods exist for determining what request
+ * target form is in use:
  *
- * - isOrigin() tests if the target is in origin-form (path + optional query
- *   string only).
  * - isAbsolute() tests if the target is in absolute-form (minimally scheme +
  *   authority).
+ * - isOrigin() tests if the target is in origin-form (path + optional query
+ *   string only).
  * - isAuthority() tests if the target contains the authority only.
  * - isAsterisk() tests if the entirety of the target is '*'.
  *
  * These target forms are included, as they are valid forms for use with an
  * HTTP request, and will appear without other URI segments available within
- * the request line. This interface models the target as it appears.
+ * the request line. This interface models the target as it appears in the
+ * incoming request line or as it will be emitted by a client.
  *
  * Typically, for all forms other than absolute-form, minimally the Host header
  * will be also be present in the request message. For server-side requests,
@@ -31,7 +34,7 @@ namespace Psr\Http\Message;
  * @link http://tools.ietf.org/html/rfc3986 (the URI specification)
  * @link http://tools.ietf.org/html/rfc7230#section-2.7 (URIs as used in the HTTP specification)
  */
-interface UriInterface
+interface UriTargetInterface
 {
     /**
      * Retrieve the URI scheme.
