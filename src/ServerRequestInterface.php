@@ -223,8 +223,7 @@ interface ServerRequestInterface extends RequestInterface
      *
      * @see getAttributes()
      * @param string $attribute The attribute name.
-     * @param mixed $value The value of the attribute.
      * @return self
      */
-    public function withoutAttribute($attribute, $value);
+    public function withoutAttribute($attribute);
 }
