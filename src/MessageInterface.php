@@ -7,13 +7,17 @@ namespace Psr\Http\Message;
  * from a server to a client. This interface defines the methods common to
  * each.
  *
+ * Messages are considered immutable; all methods that might change state MUST
+ * be implemented such that they retain the internal state of the current
+ * message and return a new instance that contains the changed state.
+ *
  * @link http://www.ietf.org/rfc/rfc7230.txt
  * @link http://www.ietf.org/rfc/rfc7231.txt
  */
 interface MessageInterface
 {
     /**
-     * Gets the HTTP protocol version as a string.
+     * Retrieves the HTTP protocol version as a string.
      *
      * The string MUST contain only the HTTP version number (e.g., "1.1", "1.0").
      *
@@ -22,14 +26,22 @@ interface MessageInterface
     public function getProtocolVersion();
 
     /**
-     * Gets the body of the message.
+     * Create a new instance with the specified HTTP protocol version.
      *
-     * @return StreamableInterface|null Returns the body, or null if not set.
+     * The version string MUST contain only the HTTP version number (e.g.,
+     * "1.1", "1.0").
+     *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * new protocol version.
+     *
+     * @param string $version HTTP protocol version
+     * @return self
      */
-    public function getBody();
+    public function withProtocolVersion($version);
 
     /**
-     * Gets all message headers.
+     * Retrieves all message headers.
      *
      * The keys represent the header name as it will be sent over the wire, and
      * each value is an array of strings associated with the header.
@@ -69,7 +81,8 @@ interface MessageInterface
      * a comma.
      *
      * NOTE: Not all header values may be appropriately represented using
-     * comma concatenation.
+     * comma concatenation. For such headers, use getHeaderLines() instead
+     * and supply your own delimiter when concatenating.
      *
      * @param string $header Case-insensitive header name.
      * @return string
@@ -82,5 +95,78 @@ interface MessageInterface
      * @param string $header Case-insensitive header name.
      * @return string[]
      */
-    public function getHeaderAsArray($header);
+    public function getHeaderLines($header);
+
+    /**
+     * Create a new instance with the provided header, replacing any existing
+     * values of any headers with the same case-insensitive name.
+     *
+     * The header name is case-insensitive. The header values MUST be a string
+     * or an array of strings.
+     *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * new and/or updated header and value.
+     *
+     * @param string $header Header name
+     * @param string|string[] $value Header value(s).
+     * @return self
+     * @throws \InvalidArgumentException for invalid header names or values.
+     */
+    public function withHeader($header, $value);
+
+    /**
+     * Creates a new instance, with the specified header appended with the
+     * given value.
+     *
+     * Existing values for the specified header will be maintained. The new
+     * value(s) will be appended to the existing list. If the header did not
+     * exist previously, it will be added.
+     *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * new header and/or value.
+     *
+     * @param string $header Header name to add
+     * @param string|string[] $value Header value(s).
+     * @return self
+     * @throws \InvalidArgumentException for invalid header names or values.
+     */
+    public function withAddedHeader($header, $value);
+
+    /**
+     * Creates a new instance, without the specified header.
+     *
+     * Header resolution MUST be done without case-sensitivity.
+     *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that removes
+     * the named header.
+     *
+     * @param string $header HTTP header to remove
+     * @return self
+     */
+    public function withoutHeader($header);
+
+    /**
+     * Gets the body of the message.
+     *
+     * @return StreamableInterface Returns the body as a stream.
+     */
+    public function getBody();
+
+    /**
+     * Create a new instance, with the specified message body.
+     *
+     * The body MUST be a StreamableInterface object.
+     *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * new body stream.
+     *
+     * @param StreamableInterface $body Body.
+     * @return self
+     * @throws \InvalidArgumentException When the body is not valid.
+     */
+    public function withBody(StreamableInterface $body);
 }
