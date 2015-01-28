@@ -21,6 +21,58 @@ namespace Psr\Http\Message;
 interface RequestInterface extends MessageInterface
 {
     /**
+     * Retrieves the message's request line.
+     *
+     * Retrieves the message's request line either as it will appear (for
+     * clients), as it appeared at request (for servers), or as it was
+     * specified for the instance (see withRequestLine()).
+     *
+     * This method MUST return a string of the form:
+     *
+     * <code>
+     * HTTP_METHOD REQUEST_TARGET HTTP/PROTOCOL_VERSION
+     * </code>
+     *
+     * If the request line is calculated at method execution (i.e., not from
+     * a value set on the instance), the request-target MUST be in origin-form.
+     *
+     * If any aspect of the request line is unknown, it MUST raise an
+     * exception.
+     *
+     * @return string
+     * @throws \RuntimeException if unable to construct a valid request line.
+     */
+    public function getRequestLine();
+
+    /**
+     * Create a new instance with a specific request line.
+     *
+     * If the request needs a specific request line — for instance, to allow
+     * specifying an absolute-form, authority-form, or asterisk-form
+     * request-target — this method may be used to create an instance with
+     * the specified request line, verbatim.
+     *
+     * This method MUST validate that the line is in the form:
+     *
+     * <code>
+     * HTTP_METHOD REQUEST_TARGET HTTP/PROTOCOL_VERSION
+     * </code>
+     *
+     * and raise an exception if not.
+     *
+     * This method MUST be implemented in such a way as to retain the
+     * immutability of the message, and MUST return a new instance that has the
+     * changed request line.
+     *
+     * @link http://tools.ietf.org/html/rfc7230#section-2.7 (for the various
+     *     request-target forms allowed in request messages)
+     * @param mixed $requestLine
+     * @return self
+     * @throws \InvalidArgumentException for invalid request lines.
+     */
+    public function withRequestLine($requestLine);
+
+    /**
      * Retrieves the HTTP method of the request.
      *
      * @return string Returns the request method.
@@ -47,10 +99,10 @@ interface RequestInterface extends MessageInterface
     /**
      * Retrieves the URI instance.
      *
-     * This method MUST return a UriTargetInterface instance.
+     * This method MUST return a UriInterface instance.
      *
      * @link http://tools.ietf.org/html/rfc3986#section-4.3
-     * @return UriTargetInterface Returns a UriTargetInterface instance
+     * @return UriInterface Returns a UriInterface instance
      *     representing the URI of the request, if any.
      */
     public function getUri();
@@ -60,11 +112,11 @@ interface RequestInterface extends MessageInterface
      *
      * This method MUST be implemented in such a way as to retain the
      * immutability of the message, and MUST return a new instance that has the
-     * new UriTargetInterface instance.
+     * new UriInterface instance.
      *
      * @link http://tools.ietf.org/html/rfc3986#section-4.3
-     * @param UriTargetInterface $uri New request URI to use.
+     * @param UriInterface $uri New request URI to use.
      * @return self
      */
-    public function withUri(UriTargetInterface $uri);
+    public function withUri(UriInterface $uri);
 }

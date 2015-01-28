@@ -2,39 +2,23 @@
 namespace Psr\Http\Message;
 
 /**
- * Value object representing the request target, and typically a URI.
+ * Value object representing a URI for use in HTTP requests.
+ *
+ * This interface is meant to represent only URIs for use with HTTP requests,
+ * and is not intended as a general-purpose URI implementation.
  *
  * Instances of this interface are considered immutable; all methods that
  * might change state MUST be implemented such that they retain the internal
  * state of the current instance and return a new instance that contains the
  * changed state.
  *
- * Since this interface represents a request target per RFC 7230, the instance
- * MAY represent an absolute URI OR one of the request targets that are not
- * fully qualified URIs, including origin-form, authority-form, or
- * asterisk-form. As such, test methods exist for determining what request
- * target form is in use:
- *
- * - isAbsolute() tests if the target is in absolute-form (minimally scheme +
- *   authority).
- * - isOrigin() tests if the target is in origin-form (path + optional query
- *   string only).
- * - isAuthority() tests if the target contains the authority only.
- * - isAsterisk() tests if the entirety of the target is '*'.
- *
- * These target forms are included, as they are valid forms for use with an
- * HTTP request, and will appear without other URI segments available within
- * the request line. This interface models the target as it appears in the
- * incoming request line or as it will be emitted by a client.
- *
- * Typically, for all forms other than absolute-form, minimally the Host header
- * will be also be present in the request message. For server-side requests,
- * the scheme will typically be discoverable in the server parameters.
+ * Typically the Host header will be also be present in the request message.
+ * For server-side requests, the scheme will typically be discoverable in the
+ * server parameters.
  *
  * @link http://tools.ietf.org/html/rfc3986 (the URI specification)
- * @link http://tools.ietf.org/html/rfc7230#section-2.7 (URIs as used in the HTTP specification)
  */
-interface UriTargetInterface
+interface UriInterface
 {
     /**
      * Retrieve the URI scheme.
@@ -261,52 +245,6 @@ interface UriTargetInterface
      * @return self A new instance with the specified URI fragment.
      */
     public function withFragment($fragment);
-
-    /**
-     * Indicate whether the URI is in origin-form.
-     *
-     * Origin-form is a URI that includes only the path, and optionally the
-     * query string.
-     *
-     * @link http://tools.ietf.org/html/rfc7230#section-5.3.1
-     * @return bool
-     */
-    public function isOrigin();
-
-    /**
-     * Indicate whether the URI is absolute.
-     *
-     * An absolute URI contains minimally a non-empty scheme and non-empty
-     * authority.
-     *
-     * @see getAuthority()
-     * @link http://tools.ietf.org/html/rfc7230#section-5.3.2
-     * @return bool
-     */
-    public function isAbsolute();
-
-    /**
-     * Indicate whether the instance represents an authority-form request
-     * target.
-     *
-     * An authority-form request-target contains ONLY the authority information.
-     *
-     * @see getAuthority()
-     * @link http://tools.ietf.org/html/rfc7230#section-5.3.3
-     * @return bool
-     */
-    public function isAuthority();
-
-    /**
-     * Indicate whether the instance represents an asterisk-form request
-     * target.
-     *
-     * An asterisk-form request-target will contain ONLY the string "*".
-     *
-     * @link http://tools.ietf.org/html/rfc7230#section-5.3.4
-     * @return bool
-     */
-    public function isAsterisk();
 
     /**
      * Return the string representation of the URI.
