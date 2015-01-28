@@ -58,6 +58,9 @@ interface MessageInterface
      *         }
      *     }
      *
+     * While header names are not case-sensitive, getHeaders() will preserve the
+     * exact case in which headers were originally specified.
+     *
      * @return array Returns an associative array of the message's headers. Each
      *     key MUST be a header name, and each value MUST be an array of strings.
      */
@@ -101,8 +104,8 @@ interface MessageInterface
      * Create a new instance with the provided header, replacing any existing
      * values of any headers with the same case-insensitive name.
      *
-     * The header name is case-insensitive. The header values MUST be a string
-     * or an array of strings.
+     * While header names are case-insensitive, the casing of the header will
+     * be preserved by this function, and returned from getHeaders().
      *
      * This method MUST be implemented in such a way as to retain the
      * immutability of the message, and MUST return a new instance that has the
