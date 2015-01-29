@@ -187,11 +187,11 @@ interface ServerRequestInterface extends RequestInterface
      * specifying a default value to return if the attribute is not found.
      *
      * @see getAttributes()
-     * @param string $attribute Attribute name.
+     * @param string $name The attribute name.
      * @param mixed $default Default value to return if the attribute does not exist.
      * @return mixed
      */
-    public function getAttribute($attribute, $default = null);
+    public function getAttribute($name, $default = null);
 
     /**
      * Create a new instance with the specified derived request attribute.
@@ -204,11 +204,11 @@ interface ServerRequestInterface extends RequestInterface
      * updated attribute.
      *
      * @see getAttributes()
-     * @param string $attribute The attribute name.
+     * @param string $name The attribute name.
      * @param mixed $value The value of the attribute.
      * @return self
      */
-    public function withAttribute($attribute, $value);
+    public function withAttribute($name, $value);
 
     /**
      * Create a new instance that removes the specified derived request
@@ -222,8 +222,8 @@ interface ServerRequestInterface extends RequestInterface
      * the attribute.
      *
      * @see getAttributes()
-     * @param string $attribute The attribute name.
+     * @param string $name The attribute name.
      * @return self
      */
-    public function withoutAttribute($attribute);
+    public function withoutAttribute($name);
 }
