@@ -69,12 +69,12 @@ interface MessageInterface
     /**
      * Checks if a header exists by the given case-insensitive name.
      *
-     * @param string $header Case-insensitive header name.
+     * @param string $name Case-insensitive header field name.
      * @return bool Returns true if any header names match the given header
      *     name using a case-insensitive string comparison. Returns false if
      *     no matching header name is found in the message.
      */
-    public function hasHeader($header);
+    public function hasHeader($name);
 
     /**
      * Retrieve a header by the given case-insensitive name, as a string.
@@ -87,18 +87,18 @@ interface MessageInterface
      * comma concatenation. For such headers, use getHeaderLines() instead
      * and supply your own delimiter when concatenating.
      *
-     * @param string $header Case-insensitive header name.
+     * @param string $name Case-insensitive header field name.
      * @return string
      */
-    public function getHeader($header);
+    public function getHeader($name);
 
     /**
      * Retrieves a header by the given case-insensitive name as an array of strings.
      *
-     * @param string $header Case-insensitive header name.
+     * @param string $name Case-insensitive header field name.
      * @return string[]
      */
-    public function getHeaderLines($header);
+    public function getHeaderLines($name);
 
     /**
      * Create a new instance with the provided header, replacing any existing
@@ -111,12 +111,12 @@ interface MessageInterface
      * immutability of the message, and MUST return a new instance that has the
      * new and/or updated header and value.
      *
-     * @param string $header Header name
+     * @param string $name Case-insensitive header field name.
      * @param string|string[] $value Header value(s).
      * @return self
      * @throws \InvalidArgumentException for invalid header names or values.
      */
-    public function withHeader($header, $value);
+    public function withHeader($name, $value);
 
     /**
      * Creates a new instance, with the specified header appended with the
@@ -130,12 +130,12 @@ interface MessageInterface
      * immutability of the message, and MUST return a new instance that has the
      * new header and/or value.
      *
-     * @param string $header Header name to add
+     * @param string $name Case-insensitive header field name to add.
      * @param string|string[] $value Header value(s).
      * @return self
      * @throws \InvalidArgumentException for invalid header names or values.
      */
-    public function withAddedHeader($header, $value);
+    public function withAddedHeader($name, $value);
 
     /**
      * Creates a new instance, without the specified header.
@@ -146,10 +146,10 @@ interface MessageInterface
      * immutability of the message, and MUST return a new instance that removes
      * the named header.
      *
-     * @param string $header HTTP header to remove
+     * @param string $name Case-insensitive header field name to remove.
      * @return self
      */
-    public function withoutHeader($header);
+    public function withoutHeader($name);
 
     /**
      * Gets the body of the message.
