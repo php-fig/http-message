@@ -35,6 +35,24 @@ interface UriInterface
     public function getScheme();
 
     /**
+     * Create a new instance with the specified scheme.
+     *
+     * This method MUST retain the state of the current instance, and return
+     * a new instance that contains the specified scheme. If the scheme
+     * provided includes the "://" delimiter, it MUST be removed.
+     *
+     * Implementations SHOULD restrict values to "http", "https", or an empty
+     * string but MAY accommodate other schemes if required.
+     *
+     * An empty scheme is equivalent to removing the scheme.
+     *
+     * @param string $scheme The scheme to use with the new instance.
+     * @return self A new instance with the specified scheme.
+     * @throws \InvalidArgumentException for invalid or unsupported schemes.
+     */
+    public function withScheme($scheme);
+
+    /**
      * Retrieve the authority portion of the URI.
      *
      * The authority portion of the URI is:
@@ -69,6 +87,22 @@ interface UriInterface
     public function getUserInfo();
 
     /**
+     * Create a new instance with the specified user information.
+     *
+     * This method MUST retain the state of the current instance, and return
+     * a new instance that contains the specified user information.
+     *
+     * Password is optional, but the user information MUST include the
+     * user; an empty string for the user is equivalent to removing user
+     * information.
+     *
+     * @param string $user User name to use for authority.
+     * @param null|string $password Password associated with $user.
+     * @return self A new instance with the specified user information.
+     */
+    public function withUserInfo($user, $password = null);
+
+    /**
      * Retrieve the host segment of the URI.
      *
      * This method MUST return a string; if no host segment is present, an
@@ -77,6 +111,20 @@ interface UriInterface
      * @return string Host segment of the URI.
      */
     public function getHost();
+
+    /**
+     * Create a new instance with the specified host.
+     *
+     * This method MUST retain the state of the current instance, and return
+     * a new instance that contains the specified host.
+     *
+     * An empty host value is equivalent to removing the host.
+     *
+     * @param string $host Hostname to use with the new instance.
+     * @return self A new instance with the specified host.
+     * @throws \InvalidArgumentException for invalid hostnames.
+     */
+    public function withHost($host);
 
     /**
      * Retrieve the port segment of the URI.
@@ -94,88 +142,6 @@ interface UriInterface
      * @return null|int The port for the URI.
      */
     public function getPort();
-
-    /**
-     * Retrieve the path segment of the URI.
-     *
-     * This method MUST return a string; if no path is present it MUST return
-     * an empty string.
-     *
-     * @return string The path segment of the URI.
-     */
-    public function getPath();
-
-    /**
-     * Retrieve the query string of the URI.
-     *
-     * This method MUST return a string; if no query string is present, it MUST
-     * return an empty string.
-     *
-     * The string returned MUST omit the leading "?" character.
-     *
-     * @return string The URI query string.
-     */
-    public function getQuery();
-
-    /**
-     * Retrieve the fragment segment of the URI.
-     *
-     * This method MUST return a string; if no fragment is present, it MUST
-     * return an empty string.
-     *
-     * The string returned MUST omit the leading "#" character.
-     *
-     * @return string The URI fragment.
-     */
-    public function getFragment();
-
-    /**
-     * Create a new instance with the specified scheme.
-     *
-     * This method MUST retain the state of the current instance, and return
-     * a new instance that contains the specified scheme. If the scheme
-     * provided includes the "://" delimiter, it MUST be removed.
-     *
-     * Implementations SHOULD restrict values to "http", "https", or an empty
-     * string but MAY accommodate other schemes if required.
-     *
-     * An empty scheme is equivalent to removing the scheme.
-     *
-     * @param string $scheme The scheme to use with the new instance.
-     * @return self A new instance with the specified scheme.
-     * @throws \InvalidArgumentException for invalid or unsupported schemes.
-     */
-    public function withScheme($scheme);
-
-    /**
-     * Create a new instance with the specified user information.
-     *
-     * This method MUST retain the state of the current instance, and return
-     * a new instance that contains the specified user information.
-     *
-     * Password is optional, but the user information MUST include the
-     * user; an empty string for the user is equivalent to removing user
-     * information.
-     *
-     * @param string $user User name to use for authority.
-     * @param null|string $password Password associated with $user.
-     * @return self A new instance with the specified user information.
-     */
-    public function withUserInfo($user, $password = null);
-
-    /**
-     * Create a new instance with the specified host.
-     *
-     * This method MUST retain the state of the current instance, and return
-     * a new instance that contains the specified host.
-     *
-     * An empty host value is equivalent to removing the host.
-     *
-     * @param string $host Hostname to use with the new instance.
-     * @return self A new instance with the specified host.
-     * @throws \InvalidArgumentException for invalid hostnames.
-     */
-    public function withHost($host);
 
     /**
      * Create a new instance with the specified port.
@@ -197,6 +163,16 @@ interface UriInterface
     public function withPort($port);
 
     /**
+     * Retrieve the path segment of the URI.
+     *
+     * This method MUST return a string; if no path is present it MUST return
+     * an empty string.
+     *
+     * @return string The path segment of the URI.
+     */
+    public function getPath();
+
+    /**
      * Create a new instance with the specified path.
      *
      * This method MUST retain the state of the current instance, and return
@@ -212,6 +188,18 @@ interface UriInterface
      * @throws \InvalidArgumentException for invalid paths.
      */
     public function withPath($path);
+
+    /**
+     * Retrieve the query string of the URI.
+     *
+     * This method MUST return a string; if no query string is present, it MUST
+     * return an empty string.
+     *
+     * The string returned MUST omit the leading "?" character.
+     *
+     * @return string The URI query string.
+     */
+    public function getQuery();
 
     /**
      * Create a new instance with the specified query string.
@@ -230,6 +218,18 @@ interface UriInterface
      * @throws \InvalidArgumentException for invalid query strings.
      */
     public function withQuery($query);
+    
+    /**
+     * Retrieve the fragment segment of the URI.
+     *
+     * This method MUST return a string; if no fragment is present, it MUST
+     * return an empty string.
+     *
+     * The string returned MUST omit the leading "#" character.
+     *
+     * @return string The URI fragment.
+     */
+    public function getFragment();
 
     /**
      * Create a new instance with the specified URI fragment.
@@ -261,5 +261,6 @@ interface UriInterface
      *
      * @return string
      */
+    
     public function __toString();
 }
