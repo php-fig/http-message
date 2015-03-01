@@ -21,6 +21,22 @@ namespace Psr\Http\Message;
 interface RequestInterface extends MessageInterface
 {
     /**
+     * Extends MessageInterface::getHeader() to provide request-specific
+     * behavior.
+     *
+     * This method acts exactly like MessageInterface::getHeader(), with
+     * one behavioral change: if the Host header is requested, but has
+     * not been previously set, the method SHOULD attempt to pull the host
+     * segment of the composed URI, if present.
+     *
+     * @see MessageInterface::getHeader()
+     * @see UriInterface::getHost()
+     * @param string $name Case-insensitive header field name.
+     * @return string
+     */
+    public function getHeader($name);
+
+    /**
      * Retrieves the message's request target.
      *
      * Retrieves the message's request-target either as it will appear (for
