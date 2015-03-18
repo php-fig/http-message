@@ -11,12 +11,18 @@
     ],
     "autoload": {
         "psr-4": {
-            "Psr\\Http\\Message\\": "src"
+            "Psr\\Http\\Message\\": [
+                "src",
+                "test"
+            ]
         }
     },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.3"
     }
 }
