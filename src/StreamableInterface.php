@@ -131,10 +131,10 @@ interface StreamableInterface
     /**
      * Reads and returns the remaining contents of the stream.
      *
-     * The resulting stream position should be `EOF`.
+     * The resulting stream position MUST be EOF.
      *
      * @link http://php.net/stream_get_contents
-     * @return string
+     * @return string|false The remaining contents, or FALSE on failure.
      */
     public function getContents();
 
