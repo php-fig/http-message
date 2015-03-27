@@ -129,9 +129,12 @@ interface StreamableInterface
     public function read($length);
 
     /**
-     * Returns the remaining contents in a string
+     * Reads and returns the remaining contents of the stream.
      *
-     * @return string
+     * The resulting stream position MUST be EOF.
+     *
+     * @link http://php.net/stream_get_contents
+     * @return string|false The remaining contents, or FALSE on failure.
      */
     public function getContents();
 
