@@ -3,13 +3,13 @@
 namespace Psr\Http\Message;
 
 /**
- * Describes streamable message body content.
+ * Describes a data stream.
  *
  * Typically, an instance will wrap a PHP stream; this interface provides
  * a wrapper around the most common operations, including serialization of
  * the entire stream to a string.
  */
-interface StreamableInterface
+interface StreamInterface
 {
     /**
      * Reads all data from the stream into a string, from the beginning to end.
@@ -19,6 +19,10 @@ interface StreamableInterface
      *
      * Warning: This could attempt to load a large amount of data into memory.
      *
+     * This method MUST NOT raise an exception in order to conform with PHP's
+     * string casting operations.
+     *
+     * @see http://php.net/manual/en/language.oop5.magic.php#object.tostring
      * @return string
      */
     public function __toString();
@@ -49,7 +53,8 @@ interface StreamableInterface
     /**
      * Returns the current position of the file read/write pointer
      *
-     * @return int|bool Position of the file pointer or false on error.
+     * @return int Position of the file pointer
+     * @throws \RuntimeException on error.
      */
     public function tell();
 
@@ -77,20 +82,19 @@ interface StreamableInterface
      *     PHP $whence values for `fseek()`.  SEEK_SET: Set position equal to
      *     offset bytes SEEK_CUR: Set position to current location plus offset
      *     SEEK_END: Set position to end-of-stream plus offset.
-     * @return bool Returns TRUE on success or FALSE on failure.
+     * @throws \RuntimeException on failure.
      */
     public function seek($offset, $whence = SEEK_SET);
 
     /**
      * Seek to the beginning of the stream.
      *
-     * If the stream is not seekable, this method will return FALSE, indicating
-     * failure; otherwise, it will perform a seek(0), and return the status of
-     * that operation.
+     * If the stream is not seekable, this method will raise an exception;
+     * otherwise, it will perform a seek(0).
      *
      * @see seek()
      * @link http://www.php.net/manual/en/function.fseek.php
-     * @return bool Returns TRUE on success or FALSE on failure.
+     * @throws \RuntimeException on failure.
      */
     public function rewind();
 
@@ -105,8 +109,8 @@ interface StreamableInterface
      * Write data to the stream.
      *
      * @param string $string The string that is to be written.
-     * @return int|bool Returns the number of bytes written to the stream on
-     *     success or FALSE on failure.
+     * @return int Returns the number of bytes written to the stream.
+     * @throws \RuntimeException on failure.
      */
     public function write($string);
 
@@ -123,8 +127,9 @@ interface StreamableInterface
      * @param int $length Read up to $length bytes from the object and return
      *     them. Fewer than $length bytes may be returned if underlying stream
      *     call returns fewer bytes.
-     * @return string|false Returns the data read from the stream, false if
-     *     unable to read or if an error occurs.
+     * @return string Returns the data read from the stream, or an empty string
+     *     if no bytes are available.
+     * @throws \RuntimeException if an error occurs.
      */
     public function read($length);
 
@@ -132,6 +137,8 @@ interface StreamableInterface
      * Returns the remaining contents in a string
      *
      * @return string
+     * @throws \RuntimeException if unable to read or an error occurs while
+     *     reading.
      */
     public function getContents();
 

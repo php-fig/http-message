@@ -15,35 +15,35 @@ namespace Psr\Http\Message;
  *
  * Responses are considered immutable; all methods that might change state MUST
  * be implemented such that they retain the internal state of the current
- * message and return a new instance that contains the changed state.
+ * message and return an instance that contains the changed state.
  */
 interface ResponseInterface extends MessageInterface
 {
     /**
-     * Gets the response Status-Code.
+     * Gets the response status code.
      *
-     * The Status-Code is a 3-digit integer result code of the server's attempt
+     * The status code is a 3-digit integer result code of the server's attempt
      * to understand and satisfy the request.
      *
-     * @return integer Status code.
+     * @return int Status code.
      */
     public function getStatusCode();
 
     /**
-     * Create a new instance with the specified status code, and optionally
+     * Return an instance with the specified status code, and optionally
      * reason phrase, for the response.
      *
-     * If no Reason-Phrase is specified, implementations MAY choose to default
+     * If no reason phrase is specified, implementations MAY choose to default
      * to the RFC 7231 or IANA recommended reason phrase for the response's
-     * Status-Code.
+     * status code.
      *
      * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return a new instance that has the
+     * immutability of the message, and MUST return an instance that has the
      * updated status and reason phrase.
      *
      * @link http://tools.ietf.org/html/rfc7231#section-6
      * @link http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-     * @param integer $code The 3-digit integer result code to set.
+     * @param int $code The 3-digit integer result code to set.
      * @param null|string $reasonPhrase The reason phrase to use with the
      *     provided status code; if none is provided, implementations MAY
      *     use the defaults as suggested in the HTTP specification.
@@ -53,13 +53,14 @@ interface ResponseInterface extends MessageInterface
     public function withStatus($code, $reasonPhrase = null);
 
     /**
-     * Gets the response Reason-Phrase, a short textual description of the Status-Code.
+     * Gets the response reason phrase, a short textual description of the
+     * status code.
      *
-     * Because a Reason-Phrase is not a required element in a response
-     * Status-Line, the Reason-Phrase value MAY be null. Implementations MAY
+     * Because a reason phrase is not a required element in a response
+     * status line, the reason phrase value MAY be null. Implementations MAY
      * choose to return the default RFC 7231 recommended reason phrase (or those
      * listed in the IANA HTTP Status Code Registry) for the response's
-     * Status-Code.
+     * status code.
      *
      * @link http://tools.ietf.org/html/rfc7231#section-6
      * @link http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
