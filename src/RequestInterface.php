@@ -33,7 +33,7 @@ interface RequestInterface extends MessageInterface
      *
      * @see MessageInterface::getHeaders()
      * @see UriInterface::getHost()
-     * @return array Returns an associative array of the message's headers. Each
+     * @return string[][] Returns an associative array of the message's headers. Each
      *     key MUST be a header name, and each value MUST be an array of strings.
      */
     public function getHeaders();
