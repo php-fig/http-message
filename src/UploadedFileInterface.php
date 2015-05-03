@@ -20,7 +20,7 @@ interface UploadedFileInterface
      * stream_copy_to_stream() (though the result will need to be decorated in a
      * native PHP stream wrapper to work with such functions).
      *
-     * If the move() method has been called previously, this method MUST raise
+     * If the moveTo() method has been called previously, this method MUST raise
      * an exception.
      *
      * @return StreamInterface Stream representation of the uploaded file.
@@ -38,23 +38,30 @@ interface UploadedFileInterface
      * appropriate method (move_uploaded_file(), rename(), or a stream
      * operation) to perform the operation.
      *
+     * $targetPath may be an absolute path, or a relative path. If it is a
+     * relative path, resolution should be the same as used by PHP's rename()
+     * function.
+     *
      * The original file or stream MUST be removed on completion.
      *
      * If this method is called more than once, any subsequent calls MUST raise
      * an exception.
      *
      * When used in an SAPI environment where $_FILES is populated, when writing
-     * files via move(), is_uploaded_file() and move_uploaded_file() SHOULD be
-     * use to ensure permissions and upload status are verified correctly.
+     * files via moveTo(), is_uploaded_file() and move_uploaded_file() SHOULD be
+     * used to ensure permissions and upload status are verified correctly.
+     *
+     * If you wish to move to a stream, use getStream(), as SAPI operations
+     * cannot guarantee writing to stream destinations.
      *
      * @see http://php.net/is_uploaded_file
      * @see http://php.net/move_uploaded_file
-     * @param string $path Path to which to move the uploaded file.
+     * @param string $targetPath Path to which to move the uploaded file.
      * @throws \InvalidArgumentException if the $path specified is invalid.
      * @throws \RuntimeException on any error during the move operation, or on
      *     the second or subsequent call to the method.
      */
-    public function move($path);
+    public function moveTo($targetPath);
     
     /**
      * Retrieve the file size.

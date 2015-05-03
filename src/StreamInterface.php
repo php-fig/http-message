@@ -44,7 +44,7 @@ interface StreamInterface
     public function detach();
 
     /**
-     * Get the size of the stream if known
+     * Get the size of the stream if known.
      *
      * @return int|null Returns the size in bytes if known, or null if unknown.
      */
