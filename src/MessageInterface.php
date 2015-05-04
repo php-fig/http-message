@@ -94,8 +94,7 @@ interface MessageInterface
     public function getHeader($name);
 
     /**
-     * Retrieves the line for a single header, with the header values as a
-     * comma-separated string.
+     * Retrieves a comma-separated string of the values for a single header.
      *
      * This method returns all of the header values of the given
      * case-insensitive header name as a string concatenated together using
@@ -106,18 +105,17 @@ interface MessageInterface
      * and supply your own delimiter when concatenating.
      *
      * If the header does not appear in the message, this method MUST return
-     * a null value.
+     * an empty string.
      *
      * @param string $name Case-insensitive header field name.
-     * @return string|null A string of values as provided for the given header
+     * @return string A string of values as provided for the given header
      *    concatenated together using a comma. If the header does not appear in
-     *    the message, this method MUST return a null value.
+     *    the message, this method MUST return an empty string.
      */
     public function getHeaderLine($name);
 
     /**
-     * Return an instance with the provided header, replacing any existing
-     * values of any headers with the same case-insensitive name.
+     * Return an instance with the provided value replacing the specified header.
      *
      * While header names are case-insensitive, the casing of the header will
      * be preserved by this function, and returned from getHeaders().
@@ -134,8 +132,7 @@ interface MessageInterface
     public function withHeader($name, $value);
 
     /**
-     * Return an instance with the specified header appended with the
-     * given value.
+     * Return an instance with the specified header appended with the given value.
      *
      * Existing values for the specified header will be maintained. The new
      * value(s) will be appended to the existing list. If the header did not
