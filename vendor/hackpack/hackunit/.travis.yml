@@ -1,0 +1,12 @@
+language: php
+
+php:
+    - "hhvm"
+    - "hhvm-nightly"
+
+before_script:
+    - composer install --prefer-source
+
+script:
+    - hh_server --check .
+    - bin/hackunit --exclude Tests/Fixtures/ Tests/

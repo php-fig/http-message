@@ -1,0 +1,28 @@
+{
+    "name": "hackpack/hackunit",
+    "type": "library",
+    "description": "xUnit library for hacklang",
+    "keywords": ["testing", "xunit", "hack", "hhvm", "hacklang"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brian Scaturro",
+            "email": "scaturrob@gmail.com",
+            "role": "Creator"
+        },
+        {
+            "name": "Isaac Leinweber",
+            "email": "brotchen@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "hackpack/hacktions": "v1.1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "HackPack\\HackUnit\\": ""
+        }
+    },
+    "bin": ["bin/hackunit"]
+}

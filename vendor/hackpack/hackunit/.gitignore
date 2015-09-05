@@ -1,0 +1,8 @@
+*.swp
+.idea
+vendor/
+Vagrantfile
+provisioning/
+.vagrant/
+hhi/
+composer.lock

@@ -1,0 +1,32 @@
+{
+    "name": "hackpack/hacktions",
+    "type": "library",
+    "description": "Event library written in hacklang",
+    "keywords": ["events", "hack", "hhvm"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brian Scaturro",
+            "email": "scaturrob@gmail.com",
+            "homepage": "http://brianscaturro.com",
+            "role": "lead"
+        },
+        {
+            "name": "Ryan Plas",
+            "email": "plasmamars@gmail.com",
+            "homepage": "http://ryanplas.com",
+            "role": "lead"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "HackPack\\Hacktions\\": ""
+        }
+    },
+    "require-dev": {
+        "hackpack/hackunit": "dev-master"
+    },
+    "config": {
+        "bin-dir": "bin/"
+    }
+}

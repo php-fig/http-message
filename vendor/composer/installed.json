@@ -1,0 +1,107 @@
+[
+    {
+        "name": "hackpack/hacktions",
+        "version": "v1.1.1",
+        "version_normalized": "1.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/HackPack/hacktions.git",
+            "reference": "b360f603956749ab2b920bbeef0708ce0a87ae7c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/HackPack/hacktions/zipball/b360f603956749ab2b920bbeef0708ce0a87ae7c",
+            "reference": "b360f603956749ab2b920bbeef0708ce0a87ae7c",
+            "shasum": ""
+        },
+        "require-dev": {
+            "hackpack/hackunit": "dev-master"
+        },
+        "time": "2014-05-21 03:03:41",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "HackPack\\Hacktions\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Brian",
+                "email": "scaturrob@gmail.com",
+                "homepage": "http://brianscaturro.com",
+                "role": "Lead"
+            },
+            {
+                "name": "Ryan Plas",
+                "email": "plasmamars@gmail.com",
+                "homepage": "http://ryanplas.com",
+                "role": "lead"
+            }
+        ],
+        "description": "Event library written in hacklang",
+        "keywords": [
+            "events",
+            "hack",
+            "hhvm"
+        ]
+    },
+    {
+        "name": "hackpack/hackunit",
+        "version": "v0.3.3",
+        "version_normalized": "0.3.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/HackPack/HackUnit.git",
+            "reference": "7e22da35474ebdbd8cba1fcc3cd5da4a81c89b8b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/HackPack/HackUnit/zipball/7e22da35474ebdbd8cba1fcc3cd5da4a81c89b8b",
+            "reference": "7e22da35474ebdbd8cba1fcc3cd5da4a81c89b8b",
+            "shasum": ""
+        },
+        "require": {
+            "hackpack/hacktions": "v1.1.1"
+        },
+        "time": "2015-03-12 22:40:16",
+        "bin": [
+            "bin/hackunit"
+        ],
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "HackPack\\HackUnit\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Brian Scaturro",
+                "email": "scaturrob@gmail.com",
+                "role": "Creator"
+            },
+            {
+                "name": "Isaac Leinweber",
+                "email": "brotchen@gmail.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "xUnit library for hacklang",
+        "keywords": [
+            "hack",
+            "hacklang",
+            "hhvm",
+            "testing",
+            "xunit"
+        ]
+    }
+]

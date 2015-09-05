@@ -1,0 +1,11 @@
+# see http://about.travis-ci.org/docs/user/languages/php/ for more hints
+language: hack
+
+# list any PHP version you want to test against
+php:
+  # aliased to a recent 5.4.x version
+  - hhvm
+
+install: composer update
+
+script: ./vendor/bin/hackunit
