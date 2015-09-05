@@ -1,5 +1,0 @@
-<?hh //strict
-
-class TestMeNot
-{
-}
