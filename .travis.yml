@@ -6,4 +6,4 @@ php:
   # Hack
   - hhvm
 
-script: hhvm tests/syntax.hh
+script: php tests/syntax.hh
