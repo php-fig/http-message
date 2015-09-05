@@ -1,0 +1,9 @@
+# see http://about.travis-ci.org/docs/user/languages/php/ for more hints
+language: hack
+
+# list any PHP version you want to test against
+php:
+  # Hack
+  - hhvm
+
+script: hhvm tests/syntax.hh

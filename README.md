@@ -3,6 +3,8 @@ PSR Http Message - Hack Version
 
 *This package is a fork from PHP-FIG ported to Hack language*
 
+[![Build Status](https://travis-ci.org/zumb/http-message.svg?branch=master)](https://travis-ci.org/zumb/http-message)
+
 This repository holds all interfaces/classes/traits related to
 [PSR-7](http://www.php-fig.org/psr/psr-7/).
 
