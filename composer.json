@@ -1,6 +1,6 @@
 {
-    "name": "psr/http-message",
-    "description": "Common interface for HTTP messages",
+    "name": "psr-hack/http-message",
+    "description": "Common interface for HTTP messages, Hack version",
     "keywords": ["psr", "psr-7", "http", "http-message", "request", "response"],
     "license": "MIT",
     "authors": [
@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "hack": ">=3.9.0"
     },
     "autoload": {
         "psr-4": {

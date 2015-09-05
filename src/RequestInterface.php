@@ -1,4 +1,4 @@
-<?php
+<?hh //strict
 
 namespace Psr\Http\Message;
 
@@ -39,7 +39,7 @@ interface RequestInterface extends MessageInterface
      *
      * @return string
      */
-    public function getRequestTarget();
+    public function getRequestTarget():string;
 
     /**
      * Return an instance with the specific request-target.
@@ -55,17 +55,17 @@ interface RequestInterface extends MessageInterface
      *
      * @link http://tools.ietf.org/html/rfc7230#section-2.7 (for the various
      *     request-target forms allowed in request messages)
-     * @param mixed $requestTarget
+     * @param string $requestTarget
      * @return self
      */
-    public function withRequestTarget($requestTarget);
+    public function withRequestTarget(string $requestTarget):this;
 
     /**
      * Retrieves the HTTP method of the request.
      *
      * @return string Returns the request method.
      */
-    public function getMethod();
+    public function getMethod():string;
 
     /**
      * Return an instance with the provided HTTP method.
@@ -82,7 +82,7 @@ interface RequestInterface extends MessageInterface
      * @return self
      * @throws \InvalidArgumentException for invalid HTTP methods.
      */
-    public function withMethod($method);
+    public function withMethod(string $method):this;
 
     /**
      * Retrieves the URI instance.
@@ -93,7 +93,7 @@ interface RequestInterface extends MessageInterface
      * @return UriInterface Returns a UriInterface instance
      *     representing the URI of the request.
      */
-    public function getUri();
+    public function getUri():UriInterface;
 
     /**
      * Returns an instance with the provided URI.
@@ -125,5 +125,5 @@ interface RequestInterface extends MessageInterface
      * @param bool $preserveHost Preserve the original state of the Host header.
      * @return self
      */
-    public function withUri(UriInterface $uri, $preserveHost = false);
+    public function withUri(UriInterface $uri, bool $preserveHost = false):this;
 }
