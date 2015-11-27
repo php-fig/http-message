@@ -1,7 +1,7 @@
 {
-    "name": "psr-hack/http-message",
+    "name": "zumb/http-message",
     "description": "Common interface for HTTP messages, Hack version",
-    "keywords": ["psr", "psr-7", "http", "http-message", "request", "response"],
+    "keywords": ["psr", "psr-7", "http", "http-message", "request", "response", "hack"],
     "license": "MIT",
     "authors": [
         {
