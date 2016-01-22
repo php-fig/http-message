@@ -201,10 +201,10 @@ interface UriInterface
      * information.
      *
      * @param string $user The user name to use for authority.
-     * @param null|string $password The password associated with $user.
+     * @param string $password The password associated with $user.
      * @return self A new instance with the specified user information.
      */
-    public function withUserInfo($user, $password = null);
+    public function withUserInfo($user, $password = '');
 
     /**
      * Return an instance with the specified host.
