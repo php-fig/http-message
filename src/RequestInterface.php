@@ -73,6 +73,9 @@ interface RequestInterface extends MessageInterface
      * While HTTP method names are typically all uppercase characters, HTTP
      * method names are case-sensitive and thus implementations SHOULD NOT
      * modify the given string.
+     * But by convention, standardized methods are defined in all-uppercase 
+     * US-ASCII letters.
+     * @link http://tools.ietf.org/html/rfc7231#section-4.1
      *
      * This method MUST be implemented in such a way as to retain the
      * immutability of the message, and MUST return an instance that has the
