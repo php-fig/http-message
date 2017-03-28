@@ -7,28 +7,19 @@ They were created to establish a standard between middleware implementations.
 > When using `ServerRequestInterface`, both `RequestInterface` and `Psr\Http\Message\MessageInterface` methods are considered.
 
 
-Enough with the talking, let's put things in practice.
 The following examples will illustrate how basic operations are done in PSR-7.
 
-#####Examples (using Zend Diactoros)
+##### Examples
 
-Zend Diactoros is an implementation for PSR-7 interfaces. It will be used to illustrate these examples.
-Installation guide for Zend Diactoros: [Zend Diactoros Documentation - Installation](https://zendframework.github.io/zend-diactoros/install/)
 
-> All other PSR-7 implementations should have the same behaviour.
+For this examples to work (at least) a PSR-7 implementation package is required. (eg: zendframework/zend-diactoros, guzzlehttp/psr7, slim/slim, etc)
+All PSR-7 implementations should have the same behaviour.
 
-To use the `Zend Diactoros` classes add this at the beggining of the php file:
-```php
-<?php
+The following will be assumed: 
+`$request` is an object of `Psr\Http\Message\RequestInterface` and
 
-// autoloading
+`$response` is an object implementing `Psr\Http\Message\RequestInterface`
 
-use Zend\Diactoros\ServerRequestFactory;
-use Zend\Diactoros\Response;
-
-$request = ServerRequestFactory::fromGlobals($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
-$response = new Response();
-```
 
 ### Working with HTTP Headers
 
@@ -114,7 +105,7 @@ The following snippet gets the contents of a stream contents.
 ```php 
 $body = $response->getBody();
 $body->rewind(); // or $body->seek(0);
-$bodyText = $body->getContends();
+$bodyText = $body->getContents();
 ```
 > Note: If `$body->seek(1)` is called before `$body->getContents()`, the first character will be ommited as the starting pointer is set to `1`, not `0`. This is why using `$body->rewind()` is recommended.
 
