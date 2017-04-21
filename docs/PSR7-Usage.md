@@ -155,5 +155,5 @@ $body->rewind();
 $contents = $body->getContents(); // efabcd
 $contents = 'ef'.$contents;
 $body->rewind();
-$body->write($contents)
+$body->write($contents);
 ```
