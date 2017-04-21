@@ -34,6 +34,7 @@ The interfaces defined in PSR-7 are the following:
 ## `Psr\Http\Message\RequestInterface` Methods
 
 Same methods as `Psr\Http\Message\MessageInterface`  + the following methods:
+
 | Method Name                        | Description | Notes |
 |------------------------------------| ----------- | ----- |
 | `getRequestTarget()`                | Retrieves the message's request target              | origin-form, absolute-form, authority-form, asterisk-form ([RFC7230](https://www.rfc-editor.org/rfc/rfc7230.txt)) |
