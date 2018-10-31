@@ -27,14 +27,13 @@ interface LateStreamInterface
      * @param string $mode
      * @return static
      */
-    public function with(string $filename, string $mode = 'r');
+    public function withFilename(string $filename, string $mode = 'r');
 
     /**
      * Returns a new stream built to open a temporary file resource.
      *
      * It doesn't know nor open any file, at this point.
      *
-     * @param resource $resource
      * @return static
      */
     public function withTmpFile();
