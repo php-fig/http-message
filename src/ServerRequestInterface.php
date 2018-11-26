@@ -51,7 +51,7 @@ interface ServerRequestInterface extends RequestInterface
      *
      * @return array
      */
-    public function getServerParams();
+    public function getServerParams(): array;
 
     /**
      * Retrieve cookies.
@@ -63,7 +63,7 @@ interface ServerRequestInterface extends RequestInterface
      *
      * @return array
      */
-    public function getCookieParams();
+    public function getCookieParams(): array;
 
     /**
      * Return an instance with the specified cookies.
@@ -96,7 +96,7 @@ interface ServerRequestInterface extends RequestInterface
      *
      * @return array
      */
-    public function getQueryParams();
+    public function getQueryParams(): array;
 
     /**
      * Return an instance with the specified query string arguments.
@@ -134,7 +134,7 @@ interface ServerRequestInterface extends RequestInterface
      * @return array An array tree of UploadedFileInterface instances; an empty
      *     array MUST be returned if no data is present.
      */
-    public function getUploadedFiles();
+    public function getUploadedFiles(): array;
 
     /**
      * Create a new instance with the specified uploaded files.
@@ -207,7 +207,7 @@ interface ServerRequestInterface extends RequestInterface
      *
      * @return array Attributes derived from the request.
      */
-    public function getAttributes();
+    public function getAttributes(): array;
 
     /**
      * Retrieve a single derived request attribute.
@@ -224,7 +224,7 @@ interface ServerRequestInterface extends RequestInterface
      * @param mixed $default Default value to return if the attribute does not exist.
      * @return mixed
      */
-    public function getAttribute($name, $default = null);
+    public function getAttribute(string $name, $default = null);
 
     /**
      * Return an instance with the specified derived request attribute.
@@ -241,7 +241,7 @@ interface ServerRequestInterface extends RequestInterface
      * @param mixed $value The value of the attribute.
      * @return static
      */
-    public function withAttribute($name, $value);
+    public function withAttribute(string $name, $value);
 
     /**
      * Return an instance that removes the specified derived request attribute.
@@ -257,5 +257,5 @@ interface ServerRequestInterface extends RequestInterface
      * @param string $name The attribute name.
      * @return static
      */
-    public function withoutAttribute($name);
+    public function withoutAttribute(string $name);
 }
