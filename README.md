@@ -1,13 +1,12 @@
-PSR Http Message
-================
+HTTP message interfaces
+==============
 
-This repository holds all interfaces/classes/traits related to
-[PSR-7](http://www.php-fig.org/psr/psr-7/).
+This repository holds all interfaces related to [PSR-7 (HTTP message interfaces)][psr-url].
 
-Note that this is not a HTTP message implementation of its own. It is merely an
-interface that describes a HTTP message. See the specification for more details.
+Note that this is not an HTTP Message implementation of its own. It is merely interfaces that describe the components of an HTTP Message.
 
-Usage
------
+You can find [implementations][implementation-url] and [installation instructions][package-url] for the specification on the packagist.
 
-We'll certainly need some stuff in here.
+[psr-url]: http://www.php-fig.org/psr/psr-7/
+[package-url]: https://packagist.org/packages/psr/http-message
+[implementation-url]: https://packagist.org/providers/psr/http-message-implementation
