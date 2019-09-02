@@ -37,6 +37,7 @@ interface MessageInterface
      *
      * @param string $version HTTP protocol version
      * @return static
+     * @throws \InvalidArgumentException When the protocol version is not "1.0" or "1.1"
      */
     public function withProtocolVersion($version);
 
