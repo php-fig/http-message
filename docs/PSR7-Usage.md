@@ -47,10 +47,15 @@ $response->hasHeader('My-Custom-Header'); // will return true
 #### Getting comma-separated values from a header (also applies to request)
 
 ```php
-// getting value from request headers
-$request->getHeaderLine('Content-Type'); // will return: "text/html; charset=UTF-8"
 // getting value from response headers
-$response->getHeaderLine('My-Custom-Header'); // will return:  "My Custom Message; The second message"
+$response->getHeaderLine('My-Custom-Header'); // will return:  "My Custom Message,The second message"
+
+$request->withHeader('Content-Type', ['text/html', 'charset=UTF-8']);
+// getting value from request headers
+$request->getHeaderLine('Content-Type'); // will return: "text/html,charset=UTF-8"
+// sets special headers as string
+$request->withHeader('Content-Type', 'text/html; charset=UTF-8');
+$request->getHeaderLine('Content-Type'); // will return: "text/html; charset=UTF-8"
 ```
 
 #### Getting array of value from a header (also applies to request)
