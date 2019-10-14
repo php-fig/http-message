@@ -23,6 +23,21 @@ The following will be assumed:
 
 ### Working with HTTP Headers
 
+#### Getting all headers
+
+```php
+// Represent the headers as a string
+foreach ($message->getHeaders() as $name => $values) {
+    echo sprintf('%s: %s', $name, implode(',', $values));
+}
+// Emit headers iteratively
+foreach ($message->getHeaders() as $name => $values) {
+    foreach ($values as $value) {
+        header(sprintf('%s: %s', $name, $value), false);
+    }
+}
+```
+
 #### Adding headers to response:
 
 ```php
