@@ -1,4 +1,15 @@
 <?php
+/**
+ * PHP Framework Interop Group
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE file.
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) PHP Framework Interop Group (https://www.php-fig.org)
+ * @link          https://www.php-fig.org/psr/psr-7/
+ * @license       https://opensource.org/licenses/mit-license.php MIT License
+ */
 
 namespace Psr\Http\Message;
 
@@ -82,6 +93,7 @@ interface StreamInterface
      *     PHP $whence values for `fseek()`.  SEEK_SET: Set position equal to
      *     offset bytes SEEK_CUR: Set position to current location plus offset
      *     SEEK_END: Set position to end-of-stream plus offset.
+     * @return int
      * @throws \RuntimeException on failure.
      */
     public function seek($offset, $whence = SEEK_SET);
@@ -94,6 +106,7 @@ interface StreamInterface
      *
      * @see seek()
      * @link http://www.php.net/manual/en/function.fseek.php
+     * @return int
      * @throws \RuntimeException on failure.
      */
     public function rewind();

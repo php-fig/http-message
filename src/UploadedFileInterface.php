@@ -1,4 +1,15 @@
 <?php
+/**
+ * PHP Framework Interop Group
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE file.
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) PHP Framework Interop Group (https://www.php-fig.org)
+ * @link          https://www.php-fig.org/psr/psr-7/
+ * @license       https://opensource.org/licenses/mit-license.php MIT License
+ */
 
 namespace Psr\Http\Message;
 
@@ -58,12 +69,13 @@ interface UploadedFileInterface
      * @see http://php.net/is_uploaded_file
      * @see http://php.net/move_uploaded_file
      * @param string $targetPath Path to which to move the uploaded file.
+     * @return bool
      * @throws \InvalidArgumentException if the $targetPath specified is invalid.
      * @throws \RuntimeException on any error during the move operation, or on
      *     the second or subsequent call to the method.
      */
     public function moveTo($targetPath);
-    
+
     /**
      * Retrieve the file size.
      *
@@ -74,7 +86,7 @@ interface UploadedFileInterface
      * @return int|null The file size in bytes or null if unknown.
      */
     public function getSize();
-    
+
     /**
      * Retrieve the error associated with the uploaded file.
      *
@@ -90,7 +102,7 @@ interface UploadedFileInterface
      * @return int One of PHP's UPLOAD_ERR_XXX constants.
      */
     public function getError();
-    
+
     /**
      * Retrieve the filename sent by the client.
      *
@@ -105,7 +117,7 @@ interface UploadedFileInterface
      *     was provided.
      */
     public function getClientFilename();
-    
+
     /**
      * Retrieve the media type sent by the client.
      *
