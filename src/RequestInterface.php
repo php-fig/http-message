@@ -1,4 +1,15 @@
 <?php
+/**
+ * PHP Framework Interop Group
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE file.
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) PHP Framework Interop Group (https://www.php-fig.org)
+ * @link          https://www.php-fig.org/psr/psr-7/
+ * @license       https://opensource.org/licenses/mit-license.php MIT License
+ */
 
 namespace Psr\Http\Message;
 
@@ -55,7 +66,7 @@ interface RequestInterface extends MessageInterface
      *
      * @link http://tools.ietf.org/html/rfc7230#section-5.3 (for the various
      *     request-target forms allowed in request messages)
-     * @param mixed $requestTarget
+     * @param mixed $requestTarget The request target.
      * @return static
      */
     public function withRequestTarget($requestTarget);
