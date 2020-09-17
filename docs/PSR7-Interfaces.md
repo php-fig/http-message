@@ -6,13 +6,13 @@ The interfaces defined in PSR-7 are the following:
 
 | Class Name | Description |
 |---|---|
-| [Psr\Http\Message\MessageInterface](http://www.php-fig.org/psr/psr-7/#psrhttpmessagemessageinterface) | Representation of a HTTP message |
-| [Psr\Http\Message\RequestInterface](http://www.php-fig.org/psr/psr-7/#psrhttpmessagerequestinterface) | Representation of an outgoing, client-side request. |
-| [Psr\Http\Message\ServerRequestInterface](http://www.php-fig.org/psr/psr-7/#psrhttpmessageserverrequestinterface) | Representation of an incoming, server-side HTTP request. | 
-| [Psr\Http\Message\ResponseInterface](http://www.php-fig.org/psr/psr-7/#psrhttpmessageresponseinterface) | Representation of an outgoing, server-side response. |
-| [Psr\Http\Message\StreamInterface](http://www.php-fig.org/psr/psr-7/#psrhttpmessagestreaminterface) | Describes a data stream |
-| [Psr\Http\Message\UriInterface](http://www.php-fig.org/psr/psr-7/#psrhttpmessageuriinterface) | Value object representing a URI. |
-| [Psr\Http\Message\UploadedFileInterface](http://www.php-fig.org/psr/psr-7/#psrhttpmessageuploadedfileinterface) | Value object representing a file uploaded through an HTTP request. |
+| [Psr\Http\Message\MessageInterface](https://www.php-fig.org/psr/psr-7/#psrhttpmessagemessageinterface) | Representation of a HTTP message |
+| [Psr\Http\Message\RequestInterface](https://www.php-fig.org/psr/psr-7/#psrhttpmessagerequestinterface) | Representation of an outgoing, client-side request. |
+| [Psr\Http\Message\ServerRequestInterface](https://www.php-fig.org/psr/psr-7/#psrhttpmessageserverrequestinterface) | Representation of an incoming, server-side HTTP request. | 
+| [Psr\Http\Message\ResponseInterface](https://www.php-fig.org/psr/psr-7/#psrhttpmessageresponseinterface) | Representation of an outgoing, server-side response. |
+| [Psr\Http\Message\StreamInterface](https://www.php-fig.org/psr/psr-7/#psrhttpmessagestreaminterface) | Describes a data stream |
+| [Psr\Http\Message\UriInterface](https://www.php-fig.org/psr/psr-7/#psrhttpmessageuriinterface) | Value object representing a URI. |
+| [Psr\Http\Message\UploadedFileInterface](https://www.php-fig.org/psr/psr-7/#psrhttpmessageuploadedfileinterface) | Value object representing a file uploaded through an HTTP request. |
 
 ## `Psr\Http\Message\MessageInterface` Methods
 
