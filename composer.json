@@ -18,6 +18,9 @@
             "Psr\\Http\\Message\\": "src/"
         }
     },
+    "suggest": {
+        "fig/http-message-util": "Provides some useful PSR-7 utilities"
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"
