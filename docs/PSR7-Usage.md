@@ -18,7 +18,7 @@ All PSR-7 implementations should have the same behaviour.
 The following will be assumed: 
 `$request` is an object of `Psr\Http\Message\RequestInterface` and
 
-`$response` is an object implementing `Psr\Http\Message\RequestInterface`
+`$response` is an object implementing `Psr\Http\Message\ResponseInterface`
 
 
 ### Working with HTTP Headers
