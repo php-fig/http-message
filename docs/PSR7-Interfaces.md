@@ -78,7 +78,7 @@ Same methods as `Psr\Http\Message\MessageInterface`  + the following methods:
 
 | Method Name                        | Description | Notes |
 |------------------------------------| ----------- | ----- |
-| `__toString()` | Reads all data from the stream into a string, from the beginning to end. | |
+| `toString()` | Reads all data from the stream into a string, from the beginning to end. | |
 | `close()` | Closes the stream and any underlying resources. | |
 | `detach()` | Separates any underlying resources from the stream. | |
 | `getSize()` | Get the size of the stream if known. | |
@@ -112,7 +112,7 @@ Same methods as `Psr\Http\Message\MessageInterface`  + the following methods:
 | `withPath($path)` | Return an instance with the specified path. | |
 | `withQuery($query)` | Return an instance with the specified query string. | |
 | `withFragment($fragment)` | Return an instance with the specified URI fragment. | |
-| `__toString()` | Return the string representation as a URI reference. | |
+| `toString()` | Return the string representation as a URI reference. | |
 
 ## `Psr\Http\Message\UploadedFileInterface` Methods
 

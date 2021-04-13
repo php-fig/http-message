@@ -308,7 +308,7 @@ interface UriInterface
      * - If an authority is present, it MUST be prefixed by "//".
      * - The path can be concatenated without delimiters. But there are two
      *   cases where the path has to be adjusted to make the URI reference
-     *   valid as PHP does not allow to throw an exception in __toString():
+     *   valid:
      *     - If the path is rootless and an authority is present, the path MUST
      *       be prefixed by "/".
      *     - If the path is starting with more than one "/" and no authority is
@@ -319,5 +319,5 @@ interface UriInterface
      * @see http://tools.ietf.org/html/rfc3986#section-4.1
      * @return string
      */
-    public function __toString();
+    public function toString();
 }
