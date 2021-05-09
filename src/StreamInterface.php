@@ -50,7 +50,7 @@ interface StreamInterface
      *
      * @return int|null Returns the size in bytes if known, or null if unknown.
      */
-    public function getSize();
+    public function getSize(): ?int;
 
     /**
      * Returns the current position of the file read/write pointer
@@ -58,21 +58,21 @@ interface StreamInterface
      * @return int Position of the file pointer
      * @throws \RuntimeException on error.
      */
-    public function tell();
+    public function tell(): int;
 
     /**
      * Returns true if the stream is at the end of the stream.
      *
      * @return bool
      */
-    public function eof();
+    public function eof(): bool;
 
     /**
      * Returns whether or not the stream is seekable.
      *
      * @return bool
      */
-    public function isSeekable();
+    public function isSeekable(): bool;
 
     /**
      * Seek to a position in the stream.
@@ -105,7 +105,7 @@ interface StreamInterface
      *
      * @return bool
      */
-    public function isWritable();
+    public function isWritable(): bool;
 
     /**
      * Write data to the stream.
@@ -114,14 +114,14 @@ interface StreamInterface
      * @return int Returns the number of bytes written to the stream.
      * @throws \RuntimeException on failure.
      */
-    public function write(string $string);
+    public function write(string $string): int;
 
     /**
      * Returns whether or not the stream is readable.
      *
      * @return bool
      */
-    public function isReadable();
+    public function isReadable(): bool;
 
     /**
      * Read data from the stream.
@@ -133,7 +133,7 @@ interface StreamInterface
      *     if no bytes are available.
      * @throws \RuntimeException if an error occurs.
      */
-    public function read(int $length);
+    public function read(int $length): string;
 
     /**
      * Returns the remaining contents in a string
@@ -142,7 +142,7 @@ interface StreamInterface
      * @throws \RuntimeException if unable to read or an error occurs while
      *     reading.
      */
-    public function getContents();
+    public function getContents(): string;
 
     /**
      * Get stream metadata as an associative array or retrieve a specific key.
