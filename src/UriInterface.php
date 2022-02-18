@@ -19,7 +19,7 @@ namespace Psr\Http\Message;
  * For server-side requests, the scheme will typically be discoverable in the
  * server parameters.
  *
- * @link http://tools.ietf.org/html/rfc3986 (the URI specification)
+ * @link https://tools.ietf.org/html/rfc3986 (the URI specification)
  */
 interface UriInterface
 {
@@ -84,7 +84,7 @@ interface UriInterface
      * The value returned MUST be normalized to lowercase, per RFC 3986
      * Section 3.2.2.
      *
-     * @see http://tools.ietf.org/html/rfc3986#section-3.2.2
+     * @see https://tools.ietf.org/html/rfc3986#section-3.2.2
      * @return string The URI host.
      */
     public function getHost();
@@ -316,7 +316,7 @@ interface UriInterface
      * - If a query is present, it MUST be prefixed by "?".
      * - If a fragment is present, it MUST be prefixed by "#".
      *
-     * @see http://tools.ietf.org/html/rfc3986#section-4.1
+     * @see https://tools.ietf.org/html/rfc3986#section-4.1
      * @return string
      */
     public function __toString();
