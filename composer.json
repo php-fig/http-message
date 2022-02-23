@@ -7,11 +7,11 @@
     "authors": [
         {
             "name": "PHP-FIG",
-            "homepage": "http://www.php-fig.org/"
+            "homepage": "https://www.php-fig.org/"
         }
     ],
     "require": {
-        "php": ">=7.2.0"
+        "php": "^7.2.0 || ^8.0.0"
     },
     "autoload": {
         "psr-4": {
