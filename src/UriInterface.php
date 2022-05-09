@@ -279,6 +279,23 @@ interface UriInterface
      * @throws \InvalidArgumentException for invalid query strings.
      */
     public function withQuery($query);
+    
+    /**
+     * Return an instance with the specified query parameter added to existing query string.
+     *
+     * This method MUST retain the state of the current instance, and return
+     * an instance that contains the specified query string.
+     *
+     * Users can provide both encoded and decoded query characters.
+     * Implementations ensure the correct encoding as outlined in getQuery().
+     *
+     * A null query parameter value is equivalent to removing the query parameter.
+     *
+     * @param string $name The query parameter to use with the new instance.
+     * @param string|null $value Value of the query parameter.
+     * @return static A new instance with the specified query parameter.
+     */
+    public function withQueryParameter($name, $value);
 
     /**
      * Return an instance with the specified URI fragment.
