@@ -32,7 +32,7 @@ interface StreamInterface
      *
      * @return void
      */
-    public function close();
+    public function close(): void;
 
     /**
      * Separates any underlying resources from the stream.
@@ -84,7 +84,7 @@ interface StreamInterface
      *     SEEK_END: Set position to end-of-stream plus offset.
      * @throws \RuntimeException on failure.
      */
-    public function seek(int $offset, int $whence = SEEK_SET);
+    public function seek(int $offset, int $whence = SEEK_SET): void;
 
     /**
      * Seek to the beginning of the stream.
@@ -96,7 +96,7 @@ interface StreamInterface
      * @link http://www.php.net/manual/en/function.fseek.php
      * @throws \RuntimeException on failure.
      */
-    public function rewind();
+    public function rewind(): void;
 
     /**
      * Returns whether or not the stream is writable.
