@@ -320,5 +320,5 @@ interface UriInterface
      * @see http://tools.ietf.org/html/rfc3986#section-4.1
      * @return string
      */
-    public function __toString();
+    public function __toString(): string;
 }
