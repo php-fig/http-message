@@ -150,9 +150,10 @@ interface StreamInterface
      *
      * @link http://php.net/manual/en/function.stream-get-meta-data.php
      * @param string $key Specific metadata to retrieve.
-     * @return array|mixed|null Returns an associative array if no key is
+     * @return array<string, mixed>|mixed|null Returns an associative array if no key is
      *     provided. Returns a specific key value if a key is provided and the
      *     value is found, or null if the key is not found.
+     * @phpstan-return ($key is null ? array<string, mixed> : mixed|null)
      */
     public function getMetadata($key = null);
 }
