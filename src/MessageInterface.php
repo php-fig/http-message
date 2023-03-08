@@ -61,7 +61,7 @@ interface MessageInterface
      * While header names are not case-sensitive, getHeaders() will preserve the
      * exact case in which headers were originally specified.
      *
-     * @return string[][] Returns an associative array of the message's headers. Each
+     * @return array<string, string[]> Returns an associative array of the message's headers. Each
      *     key MUST be a header name, and each value MUST be an array of strings
      *     for that header.
      */
