@@ -56,7 +56,7 @@ $response->getHeaderLine('My-Custom-Header'); // will return:  "My Custom Messag
 #### Getting array of value from a header (also applies to request)
 ```php
 // getting value from request headers
-$request->getHeader('Content-Type'); // will return: ["text/html", "charset=UTF-8"]
+$request->getHeader('Content-Type'); // will return: ["text/html; charset=UTF-8"]
 // getting value from response headers
 $response->getHeader('My-Custom-Header'); // will return:  ["My Custom Message",  "The second message"]
 ```
