@@ -60,7 +60,6 @@ interface RequestInterface extends MessageInterface
      */
     public function withRequestTarget(string $requestTarget): RequestInterface;
 
-
     /**
      * Retrieves the HTTP method of the request.
      *
