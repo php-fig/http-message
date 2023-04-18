@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 1.1 - 2023-04-04
+
+### Added
+
+- Parameter type hints for methods. 
+  **This breaks backwards compatibility with previous versions** 
+  and should not have been included in a minor release, 
+  as it causes downstream errors in dependencies/consumers of this interface. 
+  This change should have been introduced in version 2.0 instead, 
+  which was a major release. 
+  Maybe the 1.1 tag can be deleted?
+
 ## 1.0.1 - 2016-08-06
 
 ### Added
