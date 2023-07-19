@@ -82,7 +82,7 @@ interface ServerRequestInterface extends RequestInterface
      * @param array $cookies Array of key/value pairs representing cookies.
      * @return static
      */
-    public function withCookieParams(array $cookies): ServerRequestInterface;
+    public function withCookieParams(array $cookies): static;
 
     /**
      * Retrieve query string arguments.
@@ -120,7 +120,7 @@ interface ServerRequestInterface extends RequestInterface
      *     $_GET.
      * @return static
      */
-    public function withQueryParams(array $query): ServerRequestInterface;
+    public function withQueryParams(array $query): static;
 
     /**
      * Retrieve normalized file upload data.
@@ -147,7 +147,7 @@ interface ServerRequestInterface extends RequestInterface
      * @return static
      * @throws \InvalidArgumentException if an invalid structure is provided.
      */
-    public function withUploadedFiles(array $uploadedFiles): ServerRequestInterface;
+    public function withUploadedFiles(array $uploadedFiles): static;
 
     /**
      * Retrieve any parameters provided in the request body.
@@ -194,7 +194,7 @@ interface ServerRequestInterface extends RequestInterface
      * @throws \InvalidArgumentException if an unsupported argument type is
      *     provided.
      */
-    public function withParsedBody($data): ServerRequestInterface;
+    public function withParsedBody($data): static;
 
     /**
      * Retrieve attributes derived from the request.
@@ -241,7 +241,7 @@ interface ServerRequestInterface extends RequestInterface
      * @param mixed $value The value of the attribute.
      * @return static
      */
-    public function withAttribute(string $name, $value): ServerRequestInterface;
+    public function withAttribute(string $name, $value): static;
 
     /**
      * Return an instance that removes the specified derived request attribute.
@@ -257,5 +257,5 @@ interface ServerRequestInterface extends RequestInterface
      * @param string $name The attribute name.
      * @return static
      */
-    public function withoutAttribute(string $name): ServerRequestInterface;
+    public function withoutAttribute(string $name): static;
 }
