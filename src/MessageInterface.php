@@ -129,7 +129,7 @@ interface MessageInterface
      * @return static
      * @throws \InvalidArgumentException for invalid header names or values.
      */
-    public function withHeader(string $name, $value): static;
+    public function withHeader(string $name, array|string $value): static;
 
     /**
      * Return an instance with the specified header appended with the given value.
@@ -147,7 +147,7 @@ interface MessageInterface
      * @return static
      * @throws \InvalidArgumentException for invalid header names or values.
      */
-    public function withAddedHeader(string $name, $value): static;
+    public function withAddedHeader(string $name, array|string $value): static;
 
     /**
      * Return an instance without the specified header.

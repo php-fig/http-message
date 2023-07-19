@@ -164,7 +164,7 @@ interface ServerRequestInterface extends RequestInterface
      * @return null|array|object The deserialized body parameters, if any.
      *     These will typically be an array or object.
      */
-    public function getParsedBody();
+    public function getParsedBody(): null|array|object;
 
     /**
      * Return an instance with the specified body parameters.
@@ -194,7 +194,7 @@ interface ServerRequestInterface extends RequestInterface
      * @throws \InvalidArgumentException if an unsupported argument type is
      *     provided.
      */
-    public function withParsedBody($data): static;
+    public function withParsedBody(null|array|object $data): static;
 
     /**
      * Retrieve attributes derived from the request.
@@ -224,7 +224,7 @@ interface ServerRequestInterface extends RequestInterface
      * @param mixed $default Default value to return if the attribute does not exist.
      * @return mixed
      */
-    public function getAttribute(string $name, $default = null);
+    public function getAttribute(string $name, mixed $default = null): mixed;
 
     /**
      * Return an instance with the specified derived request attribute.
@@ -241,7 +241,7 @@ interface ServerRequestInterface extends RequestInterface
      * @param mixed $value The value of the attribute.
      * @return static
      */
-    public function withAttribute(string $name, $value): static;
+    public function withAttribute(string $name, mixed $value): static;
 
     /**
      * Return an instance that removes the specified derived request attribute.
