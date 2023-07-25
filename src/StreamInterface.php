@@ -2,6 +2,8 @@
 
 namespace Psr\Http\Message;
 
+use Stringable;
+
 /**
  * Describes a data stream.
  *
@@ -9,7 +11,7 @@ namespace Psr\Http\Message;
  * a wrapper around the most common operations, including serialization of
  * the entire stream to a string.
  */
-interface StreamInterface
+interface StreamInterface extends Stringable
 {
     /**
      * Reads all data from the stream into a string, from the beginning to end.
@@ -25,7 +27,7 @@ interface StreamInterface
      * @see http://php.net/manual/en/language.oop5.magic.php#object.tostring
      * @return string
      */
-    public function __toString(): string;
+#   public function __toString(): string;
 
     /**
      * Closes the stream and any underlying resources.
@@ -41,7 +43,7 @@ interface StreamInterface
      *
      * @return resource|null Underlying PHP stream, if any
      */
-    public function detach();
+    public function detach(): mixed;
 
     /**
      * Get the size of the stream if known.
@@ -154,5 +156,5 @@ interface StreamInterface
      *     provided. Returns a specific key value if a key is provided and the
      *     value is found, or null if the key is not found.
      */
-    public function getMetadata(?string $key = null);
+    public function getMetadata(?string $key = null): mixed;
 }
