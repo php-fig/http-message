@@ -10,6 +10,9 @@
             "homepage": "https://www.php-fig.org/"
         }
     ],
+    "support": {
+        "source": "https://github.com/php-fig/http-message"
+    },
     "require": {
         "php": "^7.2 || ^8.0"
     },
