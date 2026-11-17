@@ -2,6 +2,47 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 2.0 - 2023-04-04
+
+### Added
+
+- Added return type declarations to all interfaces as per the PSR-7 errata (#95).
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Removed `declare(strict_types=1);` from interface files (#95).
+
+### Fixed
+
+- Nothing.
+
+## 1.1 - 2023-04-04
+
+### Added
+
+- Added parameter type declarations to all interfaces as per the PSR-7 errata (#94).
+- Added PSR-7 interfaces method list (`docs/PSR7-Interfaces.md`) and usage guide (`docs/PSR7-Usage.md`) (#79).
+
+### Changed
+
+- Updated minimum PHP version requirement to `^7.2 || ^8.0` (#94).
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 1.0.1 - 2016-08-06
 
 ### Added
